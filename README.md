@@ -33,7 +33,10 @@ Git Hub,Git Bash, Virtualbox, Vagrant & Apache
 ---
 
 10 - Toolumgebung aufsetzen
-======
+===================
+
+Hier wird die Installation von GitHub, VirtualBox, Vagrant und Visual Studio Code durchgeführt.
+
 
 01 - GitHub Account
 ===

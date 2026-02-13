@@ -18,8 +18,7 @@ Git Hub,Git Bash, Virtualbox, Vagrant & Apache
   * 03 - [Vagrant](#03---vagrant)
   * 04 - [Packer](#04---packer)
   * 05 - [AWS Cloud](#05---aws-cloud)
-
-* [LB2 hands-on](#lb2-hands-on)
+  * [LB2 hands-on](#lb2-hands-on)
 
 * 25 - [Sicherheit](#25---sicherheit)
 

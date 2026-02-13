@@ -128,7 +128,7 @@ Repository mit SSH klonen:
       $ git status
     ```
 
-[](C:\Users\IKovachevska\M-300\M300-Services\images\Abbildung 2.png)
+![alt text](C:\Users\IKovachevska\M-300\M300-Services\images\Abbildung 2.png)
 
 Ergebnis:
 

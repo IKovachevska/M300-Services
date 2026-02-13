@@ -71,7 +71,7 @@ Den Schlüssel kopieren und unter GitHub → Settings → SSH and GPG Keys → N
 Repository mit SSH klonen:
 
 ```bash
-git clone git@github.com:besirberra/M300-Services.git
+git clone git@github.com:IKovachevska/M300-Services.git
 cd M300-Services
 git status
 ```
@@ -86,8 +86,8 @@ nothing to commit, working tree clean
 Git konfigurieren:
 
 ```bash
-git config --global user.name "besirberra"
-git config --global user.email "besirberra@icloud.com"
+git config --global user.name "IKovachevska"
+git config --global user.email "kovacevskai11@gmail.com"
 ```
 
 ## VirtualBox
@@ -300,70 +300,3 @@ sudo ufw allow 22
 sudo ufw allow 80
 sudo ufw --force enable
 ```
-
-## Mini-Helpdesk (Docker Projekt)
-
-### Projektziel
-
-Containerisierte Webanwendung mit SQL-Datenbank via Docker Compose.
-
-### Architektur
-
-- Web Container (PHP + Apache)
-- MySQL Container
-- Monitoring mit cAdvisor
-
-### Ports
-
-| Service | Interner Port | Host-Port |
-|----------|---------------|-----------|
-| Web | 80 | 8081 |
-| MySQL | 3306 | 3307 |
-| cAdvisor | 8080 | 8090 |
-
-### Volumes
-
-```
-./web -> /var/www/html
-dbdata -> /var/lib/mysql
-```
-
-### Start
-
-```bash
-docker compose up -d --build
-```
-
-Web:
-
-```
-http://localhost:8081
-```
-
-Monitoring:
-
-```
-http://localhost:8090
-```
-
-### Fehler
-
-```
-mysqli_sql_exception: Connection refused
-```
-
-Lösung:
-
-```bash
-docker compose down -v
-docker compose up -d --build
-```
-
-### Fazit
-
-- Dienst deployt
-- Netzwerk eingerichtet
-- Ports definiert
-- Persistenz umgesetzt
-- Monitoring integriert
-- Fehler analysiert und behoben

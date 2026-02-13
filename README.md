@@ -43,64 +43,91 @@ Hier wird die Installation von GitHub, VirtualBox, Vagrant und Visual Studio Cod
 
 > [⇧ **Nach oben**](#inhaltsverzeichnis)
 
-## GitHub Account erstellen
+## Account erstellen
 
 Zunächst wurde ein GitHub-Account auf https://www.github.com erstellt.
 
 Folgende Angaben wurden gemacht:
 
-- Benutzername
-- E-Mail-Adresse
-- Passwort
+- Benutzername: IKovachevska
+- E-Mail-Adresse: kovacevskai11@gmail.com
+- Passwort: ...
 
-Nach der Registrierung wurde die E-Mail-Adresse bestätigt und die Anmeldung erfolgreich durchgeführt.
+Nach der Registrierung wurde die E-Mail zur Verifizierung des Kontos bestätigt und anschliessend auf GitHub angemeldet.
 
 ## Repository erstellen
 
-Nach der Anmeldung wurde ein neues Repository erstellt.
+Nach der Anmeldung wurde ein neues Repository <strong>M300 -Services</strong> erstellt.
 
 Vorgehen:
 
 1. Klick auf **Start a project**
 2. Repository Name: `M300-Services`
-3. Beschreibung optional ergänzt
-4. Sichtbarkeit: **Public**
-5. Option **Initialize this repository with a README** aktiviert
-6. Klick auf **Create repository**
+3. Sichtbarkeit: **Public**
+4. Option **Initialize this repository with a README** aktiviert
+5. Klick auf **Create repository**
 
 Das Repository wurde erfolgreich erstellt.
 
+## SSH-Key erstellen und dem SSH-Agent hinzufügen
+
+Vorgehen
+
+1.  Terminal (*Bash*) öffnen
+2.  Folgenden Befehl mit der Account-E-Mail von GitHub einfügen:
+    ```Shell
+      $  ssh-keygen -t rsa -b 4096 -C "kovacevskai11@gmail.com"
+    ```
+3. Neuer SSH-Key wird erstellt:
+    ```Shell
+      Generating public/private rsa key pair.
+    ```
+4. Bei der Abfrage, unter welchem Namen der Schlüssel gespeichert werden soll, die Enter-Taste drücken (für Standard):
+    ```Shell
+      Enter a file in which to save the key (~/.ssh/id_rsa): [Press enter]
+    ```
+5. Nun kann ein Passwort für den Key festgelegt werden. 
+    ```Shell
+      Enter passphrase (empty for no passphrase): [Passwort]
+      Enter same passphrase again: [Passwort wiederholen]
+    ```
+
+
+1. Auf Benutzerkonto klicken (oben rechts) und den Punkt <strong>Settings</strong> aufrufen
+2. Unter den Menübereichen auf der linken Seite zum Abschnitt <strong>SSH und GPG keys</strong> wechseln
+3.  Auf <strong>New SSH key</strong> klicken
+4.  Im Formular unter <strong>Title</strong> eine Bezeichnung vergeben (MB SSH-Key)
+5.  Den zuvor kopierten Key mit <i>CTRL + V</i> einfügen und auf <strong>Add SSH key</strong> klicken
+6.  Der SSH-Key wurde erfolgreich hinzugefügt.
+
+
+02 - Git Client
+===
+
+> [⇧ **Nach oben**](#inhaltsverzeichnis)
+
+1. Git Client installiert und befähigt.
+2. Client wie folgt konfiguriert:
+
+    ```Shell
+      $ git config --global user.name "<IKovachevska>"
+    ```
+
+        ```Shell
+      $ git config --global user.email "<kovacevskai11@gmail.com>"
+    ```
+
 ## Repository clonen
-
-Zur sicheren Verbindung zwischen lokalem PC und GitHub wurde ein SSH-Key generiert.
-
-```bash
-ssh-keygen -t rsa -b 4096 -C "kovacevskai11@gmail.com"
-```
-
-Standard-Datei mit Enter bestätigen:
-
-```
-Enter a file in which to save the key (~/.ssh/id_rsa): [Enter]
-```
-
-Passphrase setzen und bestätigen.
-
-Public Key anzeigen:
-
-```bash
-cat ~/.ssh/id_rsa.pub
-```
-
-Den Schlüssel kopieren und unter GitHub → Settings → SSH and GPG Keys → New SSH Key einfügen.
 
 Repository mit SSH klonen:
 
-```bash
-git clone git@github.com:IKovachevska/M300-Services.git
-cd M300-Services
-git status
-```
+    ```Shell
+      $ git clone git@github.com:IKovachevska/M300-Services.git
+      $ cd M300-Services
+      $ git pull
+      $ git status
+    ```
+
 
 Ergebnis:
 
@@ -138,6 +165,10 @@ sudo apt-get update
 sudo apt-get upgrade
 sudo reboot
 ```
+
+![alt text](images/Abbildung 2.png)
+
+!!!
 
 Apache installieren:
 

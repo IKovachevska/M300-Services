@@ -32,7 +32,7 @@ Das Repository wurde erfolgreich erstellt.
 Zur sicheren Verbindung zwischen lokalem PC und GitHub wurde ein SSH-Key generiert.
 
 ```bash
-ssh-keygen -t rsa -b 4096 -C "besirberra@icloud.com"
+ssh-keygen -t rsa -b 4096 -C "kovacevskai11@gmail.com"
 ```
 
 Standard-Datei mit Enter bestätigen:

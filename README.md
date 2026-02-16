@@ -128,7 +128,7 @@ Repository mit SSH klonen:
       $ git status
     ```
 
-![Abbildung 2](images/Abbildung-2.png)
+![Abbildung 2](images/Abbildung 2.png)
 
 Ergebnis:
 

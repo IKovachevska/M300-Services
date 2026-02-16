@@ -101,6 +101,7 @@ Vorgehen
 6.  Der SSH-Key wurde erfolgreich hinzugefügt.
 
 
+
 02 - Git Client
 ===
 
@@ -113,7 +114,7 @@ Vorgehen
       $ git config --global user.name "<IKovachevska>"
     ```
 
-        ```Shell
+    ```Shell
       $ git config --global user.email "<kovacevskai11@gmail.com>"
     ```
 

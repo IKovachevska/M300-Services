@@ -101,7 +101,6 @@ Vorgehen
 6.  Der SSH-Key wurde erfolgreich hinzugefügt.
 
 
-
 02 - Git Client
 ===
 
@@ -129,7 +128,7 @@ Repository mit SSH klonen:
       $ git status
     ```
 
-![alt text](C:\Users\IKovachevska\M-300\M300-Services\images\Abbildung 2.png)
+![Abbildung 2](images/Abbildung-2.png)
 
 Ergebnis:
 

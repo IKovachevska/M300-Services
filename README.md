@@ -117,7 +117,7 @@ Git Hub,Git Bash, Virtualbox, Vagrant & Apache
       - [Jenkins Einrichtung](#jenkins-einrichtung)
       - [Überprüfung der gebauten Images](#überprüfung-der-gebauten-images)
       - [Anwendung testen](#anwendung-testen)
-    - [Ziele:](#ziele)
+    - [Ziele](#ziele)
     - [Zusammenhang zur Sicherheit](#zusammenhang-zur-sicherheit)
   - [Ergebnis](#ergebnis)
   - [Fazit](#fazit-1)
@@ -1940,7 +1940,7 @@ Die Order-Webapplikation wurde erfolgreich angezeigt.
 ![Abbildung 47](images/Abbildung-47.png)
 
 
-### Ziele:
+### Ziele
 
 - Früherkennung von Fehlern
 - Stabilere Software

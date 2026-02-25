@@ -61,6 +61,15 @@ Git Hub,Git Bash, Virtualbox, Vagrant & Apache
   - [04 - Authentifizierung \& Autorisierung](#04---authentifizierung--autorisierung)
 - [30 - Container](#30---container)
   - [LB3 hands-on](#lb3-hands-on)
+    - [Ziel - Docker Frontend \& Backend Kombination](#ziel---docker-frontend--backend-kombination)
+    - [Docker Umgebung](#docker-umgebung)
+    - [Docker Netzwerk erstellen](#docker-netzwerk-erstellen)
+    - [Backend (MySQL) starten](#backend-mysql-starten)
+    - [Frontend (Ghost) starten](#frontend-ghost-starten)
+    - [Zugriff über Browser](#zugriff-über-browser)
+    - [Kommunikation zwischen Containern](#kommunikation-zwischen-containern)
+    - [Persistenz (Volume)](#persistenz-volume)
+    - [Fazit](#fazit)
   - [01 - Container](#01---container)
     - [Wichtige Merkmale von Containern](#wichtige-merkmale-von-containern)
     - [Container von Microservices](#container-von-microservices)
@@ -76,7 +85,42 @@ Git Hub,Git Bash, Virtualbox, Vagrant & Apache
     - [Fehler 2 – MySQL Container beendet sich sofort](#fehler-2--mysql-container-beendet-sich-sofort)
       - [Ursache](#ursache-1)
       - [Lösung](#lösung-1)
+  - [03 - Netzwerk - Anbindung](#03---netzwerk---anbindung)
+    - [Ports veröffentlichen](#ports-veröffentlichen)
+    - [Port im Dockerfile deklarieren](#port-im-dockerfile-deklarieren)
+    - [Zugriff vom Host ermöglichen (MySQL Beispiel)](#zugriff-vom-host-ermöglichen-mysql-beispiel)
+    - [Container Networking](#container-networking)
+      - [Standard-Netzwerke](#standard-netzwerke)
+  - [04 - Volumes](#04---volumes)
+    - [Warum Volumes?](#warum-volumes)
+    - [Volume im Dockerfile deklarieren](#volume-im-dockerfile-deklarieren)
+    - [Named Volumes erstellen](#named-volumes-erstellen)
+    - [Bind-Mount (Host-Verzeichnis einhängen)](#bind-mount-host-verzeichnis-einhängen)
+    - [Volume im Container testen](#volume-im-container-testen)
+    - [Datencontainer (veraltet)](#datencontainer-veraltet)
+  - [05 – Image-Bereitstellung](#05--image-bereitstellung)
+    - [Namensgebung und Tags](#namensgebung-und-tags)
+    - [Docker Hub verwenden](#docker-hub-verwenden)
+    - [Images exportieren und importieren](#images-exportieren-und-importieren)
+    - [Container exportieren und importieren](#container-exportieren-und-importieren)
+    - [Private Registry betreiben](#private-registry-betreiben)
 - [35 - Sicherheit](#35---sicherheit)
+  - [01 - Protokollieren \& Überwachen](#01---protokollieren--überwachen)
+    - [Logging](#logging)
+    - [Monitoring](#monitoring)
+  - [02 - Container sichern \& beschränken](#02---container-sichern--beschränken)
+    - [Wichtige Risiken](#wichtige-risiken)
+    - [Wichtige Sicherheitsmassnahmen](#wichtige-sicherheitsmassnahmen)
+      - [Wichtiger Hinweis](#wichtiger-hinweis)
+  - [03 - Kontinuierliche Integration (CI)](#03---kontinuierliche-integration-ci)
+    - [Jenkins \& Blue Ocean](#jenkins--blue-ocean)
+      - [Jenkins Einrichtung](#jenkins-einrichtung)
+      - [Überprüfung der gebauten Images](#überprüfung-der-gebauten-images)
+      - [Anwendung testen](#anwendung-testen)
+    - [Ziele:](#ziele)
+    - [Zusammenhang zur Sicherheit](#zusammenhang-zur-sicherheit)
+  - [Ergebnis](#ergebnis)
+  - [Fazit](#fazit-1)
 - [40 - Kubernetes (K8s)](#40---kubernetes-k8s)
   - [01 - Grundbegriffe](#01---grundbegriffe)
     - [Service Discovery](#service-discovery)
@@ -111,7 +155,7 @@ Git Hub,Git Bash, Virtualbox, Vagrant & Apache
       - [Lösung](#lösung-3)
     - [Fehler 3 – Unsicherheit bei Datenbank Konfiguration](#fehler-3--unsicherheit-bei-datenbank-konfiguration)
       - [Lösung](#lösung-4)
-  - [Funktionstest](#funktionstest)
+  - [03 - Funktionstest](#03---funktionstest)
 
 <!-- /TOC -->
 
@@ -1058,12 +1102,123 @@ Im Unternehmensumfeld werden diese Prozesse im Rahmen des Identity and Access Ma
 30 - Container
 ===================
 
-
 ## LB3 hands-on
 
 > [⇧ **Nach oben**](#inhaltsverzeichnis)
 
----------------------------------------- MUSS ERGÄNZT WERDEN!
+In LB 3 geht es darum:
+
+- Eine funktionsfähige Docker-Umgebung auf dem eigenen Notebook zu betreiben
+- Mehrere Container (Frontend + Backend) miteinander zu verbinden
+- Einen eigenen Container mit Dockerfile zu erstellen
+- Container abzusichern und mit Healthcheck zu überwachen
+
+### Ziel - Docker Frontend & Backend Kombination
+
+Ziel war es, eine funktionsfähige Docker-Umgebung auf dem eigenen Notebook zu betreiben und ein Backend (Datenbank) mit einem Frontend (Webapplikation) zu kombinieren.
+
+### Docker Umgebung
+
+1. Docker wurde lokal installiert und getestet:
+
+      ```bash
+        docker run hello-world
+     ```
+
+   Die Ausgabe bestätigte, dass Docker korrekt funktioniert.
+
+### Docker Netzwerk erstellen
+
+1. Zur Kommunikation zwischen Frontend und Backend wurde ein eigenes Netzwerk erstellt:
+
+      ```bash
+        docker network create ghost_nw
+     ```
+  
+### Backend (MySQL) starten
+
+1. Der Datenbank-Container wurde mit Umgebungsvariablen für Benutzer, Passwort und Datenbank erstellt:
+
+      ```bash
+        docker run -d \
+          --name ghost_mysql \
+          --network ghost_nw \
+          -e MYSQL_ROOT_PASSWORD=admin \
+          -e MYSQL_DATABASE=ghost \
+          -e MYSQL_USER=ghost \
+          -e MYSQL_PASSWORD=secret \
+          mysql:5.7
+     ```
+
+### Frontend (Ghost) starten
+
+1. Der Ghost-Container wurde mit Port-Mapping und Datenbankverbindung gestartet:
+
+      ```bash
+        docker run -d \
+          --name ghost \
+          --network ghost_nw \
+          -p 2368:2368 \
+          -e database__client=mysql \
+          -e database__connection__host=ghost_mysql \
+          -e database__connection__user=ghost \
+          -e database__connection__password=secret \
+          -e database__connection__database=ghost \
+          ghost:1-alpine
+     ```
+
+### Zugriff über Browser
+
+Die Webapplikation war erreichbar unter:
+
+`http://localhost:2368`
+
+Der Admin-Bereich wurde unter /ghost eingerichtet.
+
+### Kommunikation zwischen Containern
+
+Die Container kommunizieren über das gemeinsame Docker-Netzwerk ghost_nw.
+Ghost greift intern über den Container-Namen ghost_mysql auf die Datenbank zu.
+
+1. Statusprüfung:
+
+      ```bash
+        docker ps
+        docker logs ghost
+     ```
+
+### Persistenz (Volume)
+
+1. Zur dauerhaften Speicherung der Daten wurde ein Volume erstellt:
+
+      ```bash
+        docker volume create ghost_mysql_data
+     ```
+
+2. MySQL wurde mit Volume gestartet:
+
+      ```bash
+        -v ghost_mysql_data:/var/lib/mysql
+     ```
+
+   Damit bleiben die Daten auch nach Löschen des Containers erhalten.
+
+### Fazit
+
+Es wurde erfolgreich:
+
+- Eine funktionsfähige Docker-Umgebung betrieben
+- Ein Backend-Container (MySQL) erstellt
+- Ein Frontend-Container (Ghost) erstellt
+- Beide Container über ein eigenes Netzwerk verbunden
+- Der Service über Port-Mapping öffentlich zugänglich gemacht
+- Persistente Datenspeicherung mittels Volume eingerichtet
+- Die Anwendung läuft stabil unter http://localhost:2368.
+
+![Abbildung 42](images/Abbildung-42png.png)
+
+![Abbildung 43](images/Abbildung-43.png)
+
 
 ## 01 - Container
 
@@ -1227,6 +1382,8 @@ Eigenes Image mit Dockerfile gebaut
 
 ## Fehler und Lösungen
 
+> [⇧ **Nach oben**](#inhaltsverzeichnis)
+
 ### Fehler 1 – Git Bash /bin/bash Problem
 
 Fehlermeldung:
@@ -1272,18 +1429,556 @@ Zusätzlich wurde `--rm` verwendet → Container wurde automatisch gelöscht.
      ```
 
 
--------------
+## 03 - Netzwerk - Anbindung
+
+> [⇧ **Nach oben**](#inhaltsverzeichnis)
+
+Die Netzwerk-Anbindung in Docker erfolgt über Port-Mapping (-p) und Docker-Netzwerke.
+Container können entweder isoliert laufen oder über benutzerdefinierte Netzwerke miteinander kommunizieren.
+Moderne Docker-Setups verwenden eigene Bridge-Netzwerke anstelle von Container-Linking.
+
+### Ports veröffentlichen
+
+1. Port manuell weiterleiten
+
+      ```bash
+        docker run -d -p 3306:3306 mysql
+     ```
+
+   → Host-Port 3306 wird auf Container-Port 3306 gemappt.
+
+2. Automatisch freien Port wählen
+
+      ```bash
+        docker run -d -P mysql
+     ```
+
+### Port im Dockerfile deklarieren
+
+1. Mit `EXPOSE` wird dokumentiert, welcher Port im Container genutzt wird:
+
+      ```bash
+        EXPOSE 3306
+     ```
+
+`EXPOSE` veröffentlicht den Port nicht automatisch – es dient nur zur Dokumentation.
+
+### Zugriff vom Host ermöglichen (MySQL Beispiel)
+
+1. Host-Client installieren:
+
+      ```bash
+        sudo apt-get install mysql-client
+     ```
+
+2. MySQL im Container für externe Verbindungen freigeben:
+
+      ```bash
+        RUN sed -i -e"s/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
+     ```
+
+3. Benutzer freigeben:
+
+      ```bash
+        CREATE USER 'root'@'%' IDENTIFIED BY 'admin';
+        GRANT ALL PRIVILEGES ON *.* TO 'root'@'%';
+        FLUSH PRIVILEGES;
+     ```
+
+4. Verbindung vom Host testen:
+
+      ```bash
+        mysql -u root -p admin -h 127.0.0.1
+     ```
+
+### Container Networking
+
+Docker verwaltet Netzwerke unabhängig von Containern.
+Container im gleichen Netzwerk können sich über ihren Namen direkt erreichen.
+
+#### Standard-Netzwerke
+
+Docker verwaltet Netzwerke unabhängig von Containern.
+Container im gleichen Netzwerk können sich über ihren Namen direkt erreichen.
+
+| Netzwerk                    | Beschreibung                                                      |
+| ------------------------- | ----------------------------------------------------------------- | 
+| `bridge`            | Standard-Netzwerk mit Port-Mapping |
+| `none`              |  Kein Netzwerk |
+| `host`             | Container nutzt Host-Netzwerk |
+
+---
+
+1. Netzwerke anzeigen
+
+      ```bash
+        docker network ls
+        docker network inspect bridge
+     ```
+
+2. Container ohne Netzwerk starten
+
+      ```bash
+        docker run --network=none -it --rm busybox
+     ```
+
+3. Eigenes Bridge-Netzwerk erstellen
+
+      ```bash
+        docker network create --driver bridge isolated_nw
+     ```
+
+4. Container im gleichen Netzwerk starten:
+
+      ```bash
+        docker run -d --network=isolated_nw --name mysql mysql
+        docker run -it --network=isolated_nw ubuntu bash
+     ```
+
+5. Verbindung testen:
+
+      ```bash
+        curl -f http://mysql:3306
+     ```
+
+
+## 04 - Volumes
+
+> [⇧ **Nach oben**](#inhaltsverzeichnis)
+
+Standardmässig gehen alle Daten im Container verloren, sobald dieser gelöscht wird.
+Um Daten dauerhaft (persistent) zu speichern, stellt Docker Volumes und Bind-Mounts zur Verfügung.
+
+Volumes speichern Daten ausserhalb des Containers auf dem Host und sind unabhängig vom Lebenszyklus eines Containers.
+
+### Warum Volumes?
+
+Volumes ermöglichen:
+
+- Persistente Speicherung von Daten
+- Gemeinsame Nutzung zwischen mehreren Containern
+- Trennung von Anwendung und Daten
+- Unabhängigkeit vom Container-Lifecycle
+
+Wichtig!: Docker löscht Volumes nicht automatisch, wenn ein Container entfernt wird.
+
+### Volume im Dockerfile deklarieren
+
+1. Im Dockerfile kann ein Datenverzeichnis definiert werden:
+
+      ```bash
+        VOLUME /var/lib/mysql
+     ```
+
+Das zeigt Docker, dass dieses Verzeichnis persistent sein soll.
+
+### Named Volumes erstellen
+
+1. Volume erstellen:
+
+      ```bash
+        docker volume create mysql
+     ```
+
+2. Alle Volumes anzeigen:
+
+      ```bash
+        docker volume ls
+     ```
+
+3. Container mit Named Volume starten:
+
+      ```bash
+        docker run -it --name c2 -v mysql:/var/lib/mysql --rm busybox
+     ```
+
+### Bind-Mount (Host-Verzeichnis einhängen)
+
+1. Host-Ordner mit Container verbinden:
+
+      ```bash
+        docker run -d -p 3306:3306 -v ~/data/mysql:/var/lib/mysql --name mysql mysql
+     ```
+
+   → Daten werden direkt im Host-Verzeichnis gespeichert.
+
+### Volume im Container testen
+
+1. Beispiel mit Busybox:
+
+      ```bash
+        docker run -it --name c2 -v /data --rm busybox
+     ```
+
+2. Im Container:
+
+      ```bash
+        cd /data
+        echo "Test" > test.txt
+     ```
+
+3. Mount prüfen:
+
+      ```bash
+        docker inspect c2
+     ```
+
+4. Host-Datei anzeigen:
+
+      ```bash
+        sudo cat /var/lib/docker/volumes/<volume-id>/_data/test.txt
+     ```
+    
+### Datencontainer (veraltet)
+
+1. Früher wurden Datencontainer verwendet:
+
+      ```bash
+        docker create -v /dbdata --name dbstore busybox
+        docker run -it --volumes-from dbstore busybox
+     ```
+
+Heute werden stattdessen Named Volumes empfohlen.
+
+
+## 05 – Image-Bereitstellung
+
+> [⇧ **Nach oben**](#inhaltsverzeichnis)
+
+Nachdem eigene Docker-Images erstellt wurden, können sie für andere Benutzer oder Systeme bereitgestellt werden.
+
+Images können:
+
+- neu gebaut werden (docker build)
+- aus einer Registry heruntergeladen werden (docker pull)
+- exportiert und importiert werden (save/load, export/import)
+
+Wichtig ist eine saubere Namensgebung mit Tags, damit Versionen eindeutig identifiziert werden können.
+
+### Namensgebung und Tags
+
+1. Images bestehen aus:
+
+      ```bash
+        repository:tag
+     ```
+
+2. Beispiel:
+
+      ```bash
+        docker build -t mysql .
+        docker build -t mysql:1.0 .
+        docker tag mysql username/mysql
+     ```
+
+
+Ohne Tag wird automatisch `:latest` verwendet.
+
+`latest` ist nur eine Konvention – keine garantierte „neueste Version“.
+
+### Docker Hub verwenden
+
+Docker Hub ist die Standard-Online-Registry von Docker.
+
+1. Image taggen:
+
+      ```bash
+        docker tag mysql username/mysql
+     ```
+
+2. Image hochladen:
+
+      ```bash
+        docker push username/mysql
+     ```
+
+3. Image herunterladen:
+
+      ```bash
+        docker pull username/mysql
+     ```
+    
+4. Images suchen:
+
+      ```bash
+        docker search mysql
+     ```
+
+### Images exportieren und importieren
+
+Falls keine Registry verwendet wird, können Images als TAR-Datei gespeichert werden.
+
+1. Image sichern:
+
+      ```bash
+        docker save mysql -o mysql.tar
+     ```
+
+2. Image laden:
+
+      ```bash
+        docker load -i mysql.tar
+     ```
+
+### Container exportieren und importieren
+
+1. Container exportieren:
+
+      ```bash
+        docker export container_name -o container.tar
+     ```
+
+2. Container importieren (wird neues Image):
+
+      ```bash
+        docker import container.tar neues-image
+     ```
+
+### Private Registry betreiben
+
+1. Eine eigene Registry kann lokal betrieben werden:
+
+      ```bash
+        docker pull registry:2
+        docker run -d -p 5000:5000 --name registry registry:2
+     ```
+
+2. Image zur Registry pushen:
+
+      ```bash
+        docker tag ubuntu localhost:5000/myubuntu
+        docker push localhost:5000/myubuntu
+     ```
+
+3. Image von Registry holen:
+
+      ```bash
+        docker pull localhost:5000/myubuntu
+     ```
+
 
 35 - Sicherheit
 ===================
 
+Container-Sicherheit umfasst Logging, Monitoring und das Beschränken von Rechten und Ressourcen. Besonders wichtig sind das Prinzip des Least Privilege, das Begrenzen von CPU und Speicher sowie das Verhindern von Root-Zugriff im Container. Continuous Integration unterstützt zusätzlich die Qualitätssicherung durch automatisierte Builds und Tests.
+
+## 01 - Protokollieren & Überwachen
+
 > [⇧ **Nach oben**](#inhaltsverzeichnis)
+
+In containerbasierten Systemen ist Logging und Monitoring sehr wichtig, besonders bei Microservices.
+
+### Logging
+
+Docker speichert standardmässig alles, was an STDOUT und STDERR geht.
+
+1. Logs können mit folgendem Befehl angezeigt werden:
+
+      ```bash
+        docker logs <container>
+     ```
+
+Logging-Treiber:
+
+- json-file (Standard)
+- syslog (Treiber des Hosts)
+- none (Schaltet die Protokollierung ab)
+
+Zentrale Logs sind wichtig, da Container oft kurzlebig sind.
+
+### Monitoring
+
+Monitoring hilft, CPU, RAM und Ressourcenverbrauch zu überwachen.
+
+Typisches Tool:
+cAdvisor (Container Advisor)
+
+1. Starten mit:
+
+      ```bash
+        docker run -d --name cadvisor \
+        -v /:/rootfs:ro \
+        -v /var/run:/var/run:rw \
+        -v /sys:/sys:ro \
+        -v /var/lib/docker/:/var/lib/docker:ro \
+        -p 8080:8080 \
+        google/cadvisor:latest
+     ```
+
+
+Danach erreichbar unter:
+
+`http://localhost:8080`
+
+## 02 - Container sichern & beschränken
+
+> [⇧ **Nach oben**](#inhaltsverzeichnis)
+
+Container teilen sich den Linux-Kernel mit dem Host. Deshalb ist Sicherheit sehr wichtig.
+
+### Wichtige Risiken
+
+- Kernel Exploits
+- Container Breakouts
+- DoS-Angriffe
+- Vergiftete Images
+- Gestohlene Zugangsdaten
+- Grundprinzip: Least Privilege
+
+Container sollen nur minimale Rechte haben.
+
+### Wichtige Sicherheitsmassnahmen
+
+1. Container nicht als root laufen lassen:
+
+      ```bash
+        RUN groupadd -r user_grp && useradd -r -g user_grp user
+        USER user
+     ```
+
+2. Speicher begrenzen:
+
+      ```bash
+        docker run -m 128m image
+     ```
+
+3. CPU begrenzen:
+
+      ```bash
+        docker run -c 512 image
+     ```
+
+4. Dateisystem schreibgeschützt:
+
+      ```bash
+        docker run --read-only image
+     ```
+
+5. Capabilities einschränken:
+
+      ```bash
+        docker run --cap-drop all image
+     ```
+
+6. Neustarts begrenzen:
+
+      ```bash
+        docker run --restart=on-failure:10 image
+     ```
+
+#### Wichtiger Hinweis
+
+Jeder Benutzer mit Zugriff auf Docker hat praktisch Root-Rechte auf dem Host.
+
+1. Beispiel:
+
+      ```bash
+        docker run -v /:/host -it ubuntu bash
+     ```
+
+   → Vollzugriff auf Host-Dateisystem
+
+Deshalb Docker-Zugriff stark einschränken.
+
+## 03 - Kontinuierliche Integration (CI)
+
+Continuous Integration bedeutet:
+
+- Code wird in Git gespeichert
+- System baut automatisch das Projekt
+- Tests werden automatisch ausgeführt
+- Qualität wird überprüft
+
+### Jenkins & Blue Ocean
+
+Jenkins als Docker Container gestartet
+
+1. Jenkins wurde als Docker Container gestartet mit:
+
+      ```bash
+        docker run --rm -u root \
+          -p 8082:8080 \
+          -v jenkins-data:/var/jenkins_home \
+          -v //var/run/docker.sock:/var/run/docker.sock \
+          -v /c/Users/IKovachevska:/home \
+          jenkinsci/blueocean
+     ```
+
+#### Jenkins Einrichtung
+
+Im Browser wurde Jenkins unter geöffnet:
+
+`http://localhost:8082`
+
+
+Folgende Schritte wurden durchgeführt:
+
+- Initial Admin Passwort eingegeben - „Install suggested plugins“ gewählt
+- Admin Benutzer erstellt
+- Damit war Jenkins vollständig eingerichtet.
+
+![Abbildung 45](images/Abbildung-45.png)
+
+#### Überprüfung der gebauten Images
+
+1. Nach erfolgreichem Build wurde geprüft mit:
+
+      ```bash
+        docker image ls
+     ```
+
+Es wurden drei neue Images angezeigt.
+
+#### Anwendung testen
+
+Im Browser:
+
+http://localhost:8081
+
+Die Order-Webapplikation wurde erfolgreich angezeigt.
+
+![Abbildung 47](images/Abbildung-47.png)
+
+
+### Ziele:
+
+- Früherkennung von Fehlern
+- Stabilere Software
+- Schnellere Releases
+- Grundsätze von CI
+- Gemeinsame Codebasis
+- Automatisierte Builds
+- Automatisierte Tests
+- Häufige Integration
+- Kurze Testzyklen
+
+### Zusammenhang zur Sicherheit
+
+- CI hilft auch bei Sicherheit:
+- Automatische Builds mit aktuellen Images
+- Automatische Tests
+- Automatische Sicherheitsprüfungen
+- Einheitliche Entwicklungs- und Produktionsumgebung
+
+## Ergebnis
+
+> [⇧ **Nach oben**](#inhaltsverzeichnis)
+
+- Jenkins wurde erfolgreich als Docker Container betrieben.
+- Eine CI-Pipeline wurde aus einem Git Repository ausgeführt.
+- Docker Images wurden automatisch gebaut.
+- Ein Image wurde erfolgreich gestartet und getestet.
+- Continuous Integration Umgebung wurde funktionsfähig umgesetzt.
+
+## Fazit
+
+> [⇧ **Nach oben**](#inhaltsverzeichnis)
+
+Mit Jenkins wurde eine CI-Umgebung eingerichtet, welche ein Git-Repository automatisiert baut und Docker-Images erstellt. Die Integration von Docker über den gemounteten Docker-Socket ermöglichte das direkte Erstellen von Images innerhalb der Pipeline. Die Anwendung konnte erfolgreich gestartet und getestet werden.
 
 
 40 - Kubernetes (K8s)
 ===================
-
-> [⇧ **Nach oben**](#inhaltsverzeichnis)
 
 ## 01 - Grundbegriffe
 
@@ -1383,6 +2078,8 @@ Cluster erhöhen Leistung oder Verfügbarkeit.
 Kubernetes orchestriert Container in einem Cluster und automatisiert Betrieb, Skalierung und Updates.
 
 ## 03 - Kubernetes hands-on
+
+> [⇧ **Nach oben**](#inhaltsverzeichnis)
 
 Kubernetes (K8s) ist ein Orchestrierungssystem für Container.
 Container werden nicht manuell gestartet, sondern über YAML-Dateien deklarativ beschrieben.
@@ -1686,8 +2383,9 @@ Die Docker Compose ENV Variablen wurden übernommen:
 
 Installation lief danach fehlerfrei.
 
+## 03 - Funktionstest
 
-## Funktionstest
+> [⇧ **Nach oben**](#inhaltsverzeichnis)
 
 1. Repository wurde erstellt:
 

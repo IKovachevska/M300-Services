@@ -2,33 +2,29 @@ M300  - Fragen & Antworten
 
 <!-- TOC -->
 
-- 20 [- Infrastruktur Automatisierung](#--infrastruktur-automatisierung)
-- [Fragen & Antworten](#fragen--antworten)
-    - [Cloud Computing](#cloud-computing)
-    - [Infrastructure as Code](#infrastructure-as-code)
-    - [Vagrant](#vagrant)
-
-- 25 [- Sicherheit](#--sicherheit)
-- [Fragen & Antworten](#fragen--antworten)
-    - [Firewall und Reverse Proxy](#firewall-und-reverse-proxy)
-    - [SSH](#ssh)
-  
-- 30 [- Container](#--container)
-- [Fragen & Antworten](#fragen--antworten)
-    - [Container](#container)
-    - [Docker](#docker)
-    - [Docker Hub](#docker-hub)
-
-- 35 [- Sicherheit](#--sicherheit)
-- [Fragen & Antworten](#fragen--antworten)
-    - [Protokollieren & Überwachen](#protokollieren--%C3%9Cberwachen)
-    - [Container sichern & beschränken](#container-sichern--beschr%C3%A4nken)
-    - [Kontinuierliche Integration](#kontinuierliche-integration)
-  
-- 40 [- Kubernetes](#--kubernetes)
-- [Fragen & Antworten](#fragen--antworten)
-    - [Kubernetes](#kubernetes)
-    - [Objekte Ressourcen](#objekte-ressourcen)
+- [20 - Infrastruktur Automatisierung](#20---infrastruktur-automatisierung)
+- [Fragen \& Antworten](#fragen--antworten)
+  - [Cloud Computing](#cloud-computing)
+  - [Infrastructure as Code](#infrastructure-as-code)
+  - [Vagrant](#vagrant)
+- [25 - Sicherheit](#25---sicherheit)
+- [Fragen \& Antworten](#fragen--antworten-1)
+  - [Firewall und Reverse Proxy](#firewall-und-reverse-proxy)
+  - [SSH](#ssh)
+- [30 - Container](#30---container)
+- [Fragen \& Antworten](#fragen--antworten-2)
+  - [Container](#container)
+  - [Docker](#docker)
+  - [Docker Hub](#docker-hub)
+- [35 - Sicherheit](#35---sicherheit)
+- [Fragen \& Antworten](#fragen--antworten-3)
+  - [Protokollieren \& Überwachen](#protokollieren--überwachen)
+  - [Container sichern \& beschränken](#container-sichern--beschränken)
+  - [Kontinuierliche Integration](#kontinuierliche-integration)
+- [40 - Kubernetes](#40---kubernetes)
+- [Fragen \& Antworten](#fragen--antworten-4)
+  - [Kubernetes](#kubernetes)
+  - [Objekte (Ressourcen)](#objekte-ressourcen)
 
 <!-- /TOC -->
 
@@ -111,7 +107,6 @@ c) Vagrant erzeugt Container
 - [DevOps Tools Engineer](https://www.lpi.org/our-certifications/devops-overview)
 
 
-##
 25 - Sicherheit
 ===================
 
@@ -164,7 +159,6 @@ Fragen & Antworten
 - Liste der Systeme wo ich mich via ssh Verbunden habe - steht nicht in Doku -> Googeln
 
 
-##
 30 - Container
 ===================
 
@@ -290,7 +284,6 @@ Fragen & Antworten
 - `save/load` ist für Images, `export/import` für Container. So ist es möglich auch ohne Docker Registry Container Images auszutauschen, z.B. in einer Bank.
 
 
-##
 35 - Sicherheit
 ===================
 
@@ -356,7 +349,6 @@ Fragen & Antworten
 - Durch Änderungen in einem Git Repository
 
 
-##
 40 - Kubernetes
 ===================
 

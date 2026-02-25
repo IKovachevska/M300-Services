@@ -652,6 +652,8 @@ Die VM wurde mit 512 MB RAM konfiguriert.
 
 ### VM löschen
 
+1. VM löschen:
+
      ```bash
         $ vagrant destroy -f
      ``` 

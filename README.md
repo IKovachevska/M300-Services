@@ -5,41 +5,147 @@ Git Hub,Git Bash, Virtualbox, Vagrant & Apache
 
 #### Inhaltsverzeichnis
 
-* 10 - [Toolumgebung aufsetzen](#10---Toolumgebung-aufsetzen)
-  * 01 - [GitHub Account](#01---github-account)
-  * 02 - [Git Client](#02---git-client)
-  * 03 - [VirtualBox](#03---virtualbox)
-  * 04 - [Vagrant](#04---vagrant)
-  * 05 - [Visual Studio Code](#05---visual-studio-code)
+<!-- TOC -->
 
-* 20 - [Infrastruktur-Automatisierung](#20---infrastruktur-automatisierung)
-  * 01 - [Cloud Computing](#01---cloud-computing)
-  * 02 - [Infrastructure as Code (IaC)](#02---infrastructure-as-code-iac)
-  * 03 - [Vagrant](#03---vagrant)
-  * 04 - [Packer](#04---packer)
-  * 05 - [AWS Cloud](#05---aws-cloud)
-  * LB2 - [LB2 hands-on](#lb2-hands-on)
+- [M300-Plattformübergreifende-Dienste-in-ein-Netzwerk-integrieren](#m300-plattform%C3%BCbergreifende-dienste-in-ein-netzwerk-integrieren)
+            - [Inhaltsverzeichnis](#inhaltsverzeichnis)
+- [- Toolumgebung aufsetzen](#--toolumgebung-aufsetzen)
+- [- GitHub Account](#--github-account)
+    - [Account erstellen](#account-erstellen)
+    - [Repository erstellen](#repository-erstellen)
+    - [SSH-Key erstellen und dem SSH-Agent hinzufügen](#ssh-key-erstellen-und-dem-ssh-agent-hinzuf%C3%BCgen)
+    - [](#)
+- [- Git Client](#--git-client)
+    - [Repository klonen](#repository-klonen)
+    - [Repository herunterladen & aktualisieren clone/pull](#repository-herunterladen--aktualisieren-clonepull)
+    - [](#)
+- [- VirtualBox](#--virtualbox)
+    - [VM erstellen](#vm-erstellen)
+    - [VM einrichten](#vm-einrichten)
+    - [](#)
+- [- Vagrant](#--vagrant)
+    - [Virtuelle Maschine erstellen](#virtuelle-maschine-erstellen)
+    - [Apache Webserver automatisiert aufsetzen](#apache-webserver-automatisiert-aufsetzen)
+    - [](#)
+- [- Visual Studio Code](#--visual-studio-code)
+    - [Extensions installieren](#extensions-installieren)
+    - [Einstellungen anpassen](#einstellungen-anpassen)
+    - [Repository hinzufügen & pushen](#repository-hinzuf%C3%BCgen--pushen)
+- [- Infrastruktur-Automatisierung](#--infrastruktur-automatisierung)
+    - [](#)
+- [- Cloud Computing](#--cloud-computing)
+    - [Arten von Cloud Computing](#arten-von-cloud-computing)
+    - [](#)
+- [- Infrastructure as Code IaC](#--infrastructure-as-code-iac)
+    - [](#)
+- [- Vagrant](#--vagrant)
+    - [Funktionsweise & Konzepte](#funktionsweise--konzepte)
+    - [Boxen / Konfiguration / Provisioning / Provider](#boxen--konfiguration--provisioning--provider)
+        - [Ergänzung](#erg%C3%A4nzung)
+    - [Workflow](#workflow)
+        - [Box hinzufügen](#box-hinzuf%C3%BCgen)
+        - [VM erstellen](#vm-erstellen)
+        - [VM updaten](#vm-updaten)
+        - [VM löschen](#vm-l%C3%B6schen)
+    - [Synced Folders Gemeinsame Ordner](#synced-folders-gemeinsame-ordner)
+        - [Ergänzung](#erg%C3%A4nzung)
+    - [](#)
+- [- Packer](#--packer)
+    - [](#)
+- [- AWS Cloud](#--aws-cloud)
+    - [Vagrant](#vagrant)
+    - [](#)
+- [LB2 hands-on](#lb2-hands-on)
+    - [Neue VM zum Testen erstellen](#neue-vm-zum-testen-erstellen)
+    - [Serverdienste auswählen](#serverdienste-ausw%C3%A4hlen)
+    - [Feintuning](#feintuning)
+        - [Dateien und Port Weiterleitung](#dateien-und-port-weiterleitung)
+    - [Sicherheit](#sicherheit)
+- [- Sicherheit](#--sicherheit)
+    - [](#)
+- [Fragen: Firewall und Reverse Proxy](#fragen-firewall-und-reverse-proxy)
+        - [SSH](#ssh)
+    - [](#)
+- [- Firewall & Reverse Proxy](#--firewall--reverse-proxy)
+    - [UFW Firewall](#ufw-firewall)
+    - [Reverse Proxy](#reverse-proxy)
+    - [](#)
+- [- Benutzer- & Rechteverwaltung](#--benutzer---rechteverwaltung)
+    - [](#)
+- [– SSH](#-ssh)
+    - [Public Key Verfahren](#public-key-verfahren)
+    - [SSH-Tunnel Local Port Forwarding](#ssh-tunnel-local-port-forwarding)
+        - [Erklärung:](#erkl%C3%A4rung)
+    - [](#)
+- [- Authentifizierung & Autorisierung](#--authentifizierung--autorisierung)
+- [- Container](#--container)
+    - [](#)
+- [Fragen - Container](#fragen---container)
+        - [Docker](#docker)
+        - [Docker Hub](#docker-hub)
+    - [](#)
+- [LB3 hands-on](#lb3-hands-on)
+    - [](#)
+- [- Container](#--container)
+        - [Wichtige Merkmale von Containern](#wichtige-merkmale-von-containern)
+        - [Container von Microservices](#container-von-microservices)
+    - [](#)
+- [- Docker](#--docker)
+    - [Docker Architektur](#docker-architektur)
+    - [Befehle](#befehle)
+        - [Docker Images](#docker-images)
+        - [MySQL Container](#mysql-container)
+    - [Fehler und Lösungen](#fehler-und-l%C3%B6sungen)
+        - [Fehler 1 – Git Bash /bin/bash Problem](#fehler-1--git-bash-binbash-problem)
+            - [Lösung:](#l%C3%B6sung)
+        - [Fehler 2 – MySQL Container beendet sich sofort](#fehler-2--mysql-container-beendet-sich-sofort)
+            - [Ursache:](#ursache)
+            - [Lösung:](#l%C3%B6sung)
+- [- Sicherheit](#--sicherheit)
+- [- Kubernetes K8s](#--kubernetes-k8s)
+    - [](#)
+- [- Grundbegriffe](#--grundbegriffe)
+    - [Service Discovery](#service-discovery)
+    - [Vernetzung Container Networking](#vernetzung-container-networking)
+    - [Lastverteilung Load Balancing](#lastverteilung-load-balancing)
+    - [Cluster](#cluster)
+    - [](#)
+- [– Kubernetes](#-kubernetes)
+        - [Wichtige Eigenschaften](#wichtige-eigenschaften)
+        - [Wichtige Kubernetes-Objekte](#wichtige-kubernetes-objekte)
+        - [Gesamtzusammenfassung](#gesamtzusammenfassung)
+    - [](#)
+- [- Kubernetes hands-on](#--kubernetes-hands-on)
+        - [Wichtige Konzepte:](#wichtige-konzepte)
+- [- Projekte](#--projekte)
+    - [](#)
+- [- Docker Projekt – Gitea Git Server](#--docker-projekt--gitea-git-server)
+    - [Zweck des gewählten Service](#zweck-des-gew%C3%A4hlten-service)
+    - [Aufbau / Logische Struktur](#aufbau--logische-struktur)
+        - [Netzwerk](#netzwerk)
+        - [Persistenz Volumes](#persistenz-volumes)
+    - [Projektordner erstellen & Konfiguration des Dienstes](#projektordner-erstellen--konfiguration-des-dienstes)
+    - [Netzwerk & Ports](#netzwerk--ports)
+        - [Webzugriff:](#webzugriff)
+        - [SSH Zugriff:](#ssh-zugriff)
+    - [Host ↔ Container Interaktion Volumes](#host--container-interaktion-volumes)
+    - [Monitoring Lösung](#monitoring-l%C3%B6sung)
+        - [Externes Monitoring mit cAdvisor](#externes-monitoring-mit-cadvisor)
+    - [](#)
+- [- Aufgetretene Fehler & Lösungen](#--aufgetretene-fehler--l%C3%B6sungen)
+    - [Fehler 1 – HTTP 405 Method Not Allowed](#fehler-1--http-405-method-not-allowed)
+        - [Ursache:](#ursache)
+        - [Lösung:](#l%C3%B6sung)
+    - [Fehler 2 – SSH Verbindung funktionierte nicht](#fehler-2--ssh-verbindung-funktionierte-nicht)
+        - [Ursache:](#ursache)
+        - [Lösung:](#l%C3%B6sung)
+    - [Fehler 3 – Unsicherheit bei Datenbank Konfiguration](#fehler-3--unsicherheit-bei-datenbank-konfiguration)
+        - [Lösung:](#l%C3%B6sung)
+    - [](#)
+- [Funktionstest](#funktionstest)
 
-* 25 - [Sicherheit](#25---sicherheit)
-  * Fragen - [Firewall und Reverse Proxy](#Fragen---firewall-und-reverse-proxy)
-  * 01 - [Firewall & Reverse Proxy](#01---firewall-&-reverse-proxy)
-  * 02 - [Benutzer- & Rechteverwaltung](#02---benutzer--&-rechteverwaltung)
-  * 03 - [SSH](#03---ssh)
-  * 04 - [Authentifizierung & Autorisierung](#04---authentifizierung-&-autorisierung)
-  
-* 30 - [Container](#30---container)
+<!-- /TOC -->
 
-* 35 - [Sicherheit](#35---sicherheit)
-
-* 40 - [Kubernetes (K8s)](#40---kubernetes-k8s)
-
-* 50 - [Projekte](#50---projekte)
-  * 01 - [Docker Projekt - Gitea Git Server](#01---docker-projekt---gitea-git-server)
-  * 02 - [Aufgetretene Fehler & Lösungen](#02---aufgetretene-fehler-&-lösungen)
-
-* 80 - [Ergänzungen zu den Unterlagen](#80---ergänzungen-zu-den-unterlagen)
-
----
 
 10 - Toolumgebung aufsetzen
 ===================
@@ -1497,21 +1603,37 @@ Kubernetes wurde ursprünglich von Google entwickelt.
 
 | Objekt                    | Beschreibung                                                      |
 | ------------------------- | ----------------------------------------------------------------- | 
-| `Pod`            | Kleinste Einheit in Kubernetes.
-Enthält einen oder mehrere Container mit gemeinsamer IP-Adresse. |
+| `Pod`            | Kleinste Einheit in Kubernetes. Enthält einen oder mehrere Container mit gemeinsamer IP-Adresse. |
 | `ReplicaSet`              |  Bestimmt, wie viele Pods gleichzeitig laufen sollen. |
 | `Deployment`             | Ermöglicht deklarative Updates (z.B. Version 1.0 → 1.1). |
 | `Service`          | Stellt stabile IP-Adresse und Port bereit, auch wenn Pods ersetzt werden. |
 | `Ingress`            | Ermöglicht Zugriff über URLs (ähnlich Reverse Proxy). |
 
 
-Gesamtzusammenfassung
+### Gesamtzusammenfassung
 
 Service Discovery sorgt dafür, dass Services gefunden werden.
 Vernetzung ermöglicht die Kommunikation.
 Load Balancing verteilt die Last.
 Cluster erhöhen Leistung oder Verfügbarkeit.
 Kubernetes orchestriert Container in einem Cluster und automatisiert Betrieb, Skalierung und Updates.
+
+##
+03 - Kubernetes hands-on
+===
+
+Kubernetes (K8s) ist ein Orchestrierungssystem für Container.
+Container werden nicht manuell gestartet, sondern über YAML-Dateien deklarativ beschrieben.
+
+### Wichtige Konzepte:
+
+- Pod → Kleinste Einheit, enthält einen oder mehrere Container
+- Service → Macht Pods über eine stabile IP und Port erreichbar
+- Namespace → Logische Trennung von Ressourcen
+- LoadBalancer / NodePort → Exponiert Services nach aussen
+
+Kubernetes erzeugt intern für jede Ressource eine YAML-Struktur.
+Diese YAML-Dateien können gespeichert und wiederverwendet werden.
 
 50 - Projekte
 ===================

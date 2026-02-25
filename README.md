@@ -1053,8 +1053,210 @@ Im Unternehmensumfeld werden diese Prozesse im Rahmen des Identity and Access Ma
 30 - Container
 ===================
 
+##
+Fragen - Container
+===
+
 > [⇧ **Nach oben**](#inhaltsverzeichnis)
 
+<strong>Was ist der Unterschied zwischen Vagrant und Docker?</strong>
+
+- Vagrant ist für IaaS (Virtuelle Maschinen) und Docker für PaaS bzw. CaaS (Container)
+
+--- 
+
+<strong>Was welches Tools aus dem Docker Universum ist Vergleichbar mit Vagrant?</strong>
+
+- docker machine
+
+---
+
+<strong>Was macht der Docker Provisioner von Vagrant?</strong>
+
+- Installiert Docker in einer VM
+
+---
+
+<strong>Welche Linux Kernel Funktionalität verwenden Container?</strong>
+
+- Linux Namespaces, siehe auch [The Missing Introduction To Containerization]
+
+---
+
+<strong>Welches Architekturmuster verwendet der Entwickler wenn er Container einsetzt?</strong>
+
+- Microservices
+
+---
+
+<strong>Welches sind die drei Hauptmerkmale (abgeleitet vom Ur-Unix) von Microservices?</strong>
+
+- Ein Programm soll nur eine Aufgabe erledigen, und das soll es gut machen. Programme sollen zusammenarbeiten können. Nutze eine universelle Schnittstelle. In UNIX sind das Textströme. Bei Microservices das Internet (REST).
+
+---
+
+### Docker
+
+<strong>Was ist der Unterschied zwischen einem Docker Image und einem Container?</strong>
+
+- Image = gebuildet und readonly, Container Image + aktuelle Änderungen im Filesystem
+
+---
+
+<strong>Was ist der Unterschied zwischen einer Virtuellen Maschine und einem Docker Container?</strong>
+
+- VM hat Betriebssystem mit am laufen, Docker nur die eigenen Prozesse
+
+---
+
+<strong>Was ist der Unterschied zwischen einem Docker Image und einem Container?</strong>
+
+- Image = gebuildet und readonly, Container Image + aktuelle Änderungen im Filesystem
+
+---
+
+<strong>Wie bekomme ich Informationen zu einem laufenden Docker Container?</strong>
+
+- docker logs, docker inspect
+
+---
+
+<strong>Was ist der Unterschied zwischen einer Docker Registry und einem Repository</strong>
+
+- In der Docker Registry werden die Container Images gespeichert. Ein Repository speichert pro Container Image verschiedene Versionen von Images.
+
+---
+
+<strong>Wie erstelle ich ein Container Image</strong>
+
+- docker build
+
+---
+
+<strong>In welcher Datei steht welche Inhalte sich im Container Image befinden?</strong>
+
+- Dockerfile
+
+---
+
+<strong>Der erste Prozess im Container bekommt die Nummer?</strong>
+
+- 1
+
+---
+
+### Docker Hub
+
+<strong>Was ist Docker Hub?</strong>
+
+- Ein Container Registry, wo Container Image gespeichert werden. Docker Hub wird durch die Firma Docker zur Verfügung gestellt wird.
+
+---
+
+<strong>Welches sind die Alternativen?</strong>
+
+- Praktisch jeder Cloud Anbieter stellt eine Container Registry zur Verfügung. Auch die Anbieter für die Verwaltung von Build Artefakten (z.B. Sonatype Nexus) stellen Docker Registries zur Verfügung oder haben deren Funktionalität integriert.
+
+---
+
+<strong>Warum sollte eine eigene Docker Registry im Unternehmen verwendet werden?</strong>
+
+- Sicherheit, bzw. das mögliche Fehlen davon. Es kann nicht Sichergestellt werden, dass alle Container Images auf Docker Hub sicher sind.
+
+---
+
+<strong>Warum sollten Versionen tag von Images immer angegeben werden?
+
+</strong>
+
+- Ansonsten wird `latest` verwendet und so nicht sicher welche Version wirklich verwendet wird.
+
+---
+
+<strong>Was ist der Unterschied zwischen `docker save`/`docker load` und `docker export`/`docker import`?
+
+</strong>
+
+- `save/load` ist für Images, `export/import` für Container. So ist es möglich auch ohne Docker Registry Container Images auszutauschen, z.B. in einer Bank.
+
+---
+
+##
+LB3 hands-on
+===
+
+> [⇧ **Nach oben**](#inhaltsverzeichnis)
+
+---------------------------------------- MUSS ERGÄNZT WERDEN!
+
+## 
+01 - Container
+===
+
+> [⇧ **Nach oben**](#inhaltsverzeichnis)
+
+Container verändern grundlegend, wie Software entwickelt, bereitgestellt und betrieben wird. Sie ermöglichen es, Anwendungen inklusive aller Abhängigkeiten in einer isolierten Umgebung zu verpacken. Dadurch läuft die Software überall identisch – unabhängig davon, ob sie lokal, im Rechenzentrum oder in der Cloud betrieben wird.
+
+Ein zentraler Vorteil von Containern ist die Portabilität. Anwendungen können einmal entwickelt und anschliessend auf verschiedenen Systemen ohne Anpassungen ausgeführt werden. Dadurch entfallen typische Probleme wie unterschiedliche Systemkonfigurationen oder fehlende Abhängigkeiten.
+
+### Wichtige Merkmale von Containern
+
+- Container teilen sich den Kernel des Host-Betriebssystems
+- Sehr schneller Start und Stopp (Sekundenbereich)
+- Geringer Ressourcenverbrauch (leichtgewichtig)
+- Hohe Portabilität
+- Mehrere Container können parallel betrieben werden
+- Ideal für Cloud-Umgebungen
+
+Im Gegensatz zu virtuellen Maschinen benötigen Container kein eigenes vollständiges Betriebssystem, wodurch sie effizienter und ressourcenschonender sind.
+
+### Container von Microservices
+
+Ein wichtiger Anwendungsbereich von Containern ist die Microservices-Architektur.
+
+Während klassische Software oft als Monolith aufgebaut ist (eine grosse, zusammenhängende Anwendung), bestehen Microservices aus mehreren kleinen, unabhängigen Diensten, die über das Netzwerk miteinander kommunizieren.
+
+- Vorteile von Microservices:
+- Horizontale Skalierung (scale out)
+- Nur einzelne Services müssen bei Bedarf skaliert werden
+- Bessere Ressourcennutzung
+- Höhere Flexibilität
+
+Container eignen sich ideal für Microservices, da jeder Service isoliert in einem eigenen Container betrieben werden kann.
+
+## 
+02 - Docker
+===
+
+> [⇧ **Nach oben**](#inhaltsverzeichnis)
+
+Docker ist eine Container-Plattform, mit der Anwendungen inklusive aller Abhängigkeiten isoliert ausgeführt werden können. Dadurch läuft Software überall identisch – unabhängig vom System.
+
+Docker besteht aus:
+
+- Docker Daemon → Führt Container aus
+- Docker Client (CLI) → Steuert Docker per Kommandozeile
+- Images → Unveränderbare Vorlagen für Container
+- Container → Laufende Instanzen von Images
+- Docker Registry (Docker Hub) → Speicherort für Image
+
+Ein Image ist eine Vorlage, ein Container ist die laufende Instanz dieses Images.
+
+Docker nutzt sogenannte Layer (Imageschichten). Jede Anweisung im Dockerfile erzeugt eine neue Schicht.
+
+## Docker Architektur
+
+Docker funktioniert nach dem Client-Server-Prinzip:
+
+- CLI → Docker Daemon → Container
+
+Images werden lokal gespeichert oder vom Docker Hub heruntergeladen.
+
+
+## Befehle
+
+
+-------------
 
 35 - Sicherheit
 ===================
@@ -1071,6 +1273,7 @@ Im Unternehmensumfeld werden diese Prozesse im Rahmen des Identity and Access Ma
 50 - Projekte
 ===================
 
+Ziel dieses Projektes war es, eine funktionierende Git-Plattform mit Docker bereitzustellen.
 
 ##
 01 - Docker Projekt – Gitea Git Server
@@ -1080,29 +1283,22 @@ Im Unternehmensumfeld werden diese Prozesse im Rahmen des Identity and Access Ma
 
 ## Zweck des gewählten Service
 
-Gitea ist ein leichtgewichtiger, selbst gehosteter Git-Server. Er ermöglicht die zentrale Verwaltung von Repositories, Benutzern und Versionen, ähnlich wie GitHub oder GitLab, jedoch lokbegriffal im eigenen Netzwerk. Ziel dieses Projektes war es, eine funktionierende Git-Plattform mit Docker bereitzustellen.
+Gitea ist ein leichtgewichtiger, selbst gehosteter Git-Server. Er ermöglicht die zentrale Verwaltung von Repositories, Benutzern und Versionen, ähnlich wie GitHub oder GitLab, jedoch lokbegriffal im eigenen Netzwerk.
 
 ## Aufbau / Logische Struktur
 
 Das Projekt wurde mit Docker Compose umgesetzt und besteht aus zwei Containern:
 
-- gitea → Weboberfläche + Git SSH Server
-- postgres → Datenbank für Benutzer, Repositories und Einstellungen
+- `gitea` → Weboberfläche + Git SSH Server
+- `postgres` → Datenbank für Benutzer, Repositories und Einstellungen
 
 ![Abbildung 38](images/Abbildung-38.png)
-
 
 ### Netzwerk
 
 Docker Compose erstellt automatisch ein internes Netzwerk.
 
-1. Der Datenbank-Container ist für Gitea über den Hostnamen:
-
-      ```bash
-        db:5432
-     ```
-
-   erreichbar.
+- Der Datenbank-Container ist für Gitea über den Hostnamen `db:5432` erreichbar.
 
 ### Persistenz (Volumes)
 
@@ -1170,6 +1366,11 @@ Damit bleiben alle Daten auch nach einem Neustart erhalten.
         docker compose up -d
      ```
 
+5. Ansicht von den erstellten Containern:
+
+![Abbildung 38](images/Abbildung-38.png)
+
+
 ## Netzwerk & Ports
 
 Folgende Ports werden benötigt:
@@ -1235,6 +1436,47 @@ Zur Überwachung wurden folgende Docker-Tools eingesetzt:
       ```bash
         curl http://localhost:3000
      ```
+
+### Externes Monitoring mit cAdvisor
+
+Zusätzlich wurde cAdvisor als Monitoring-Tool in Docker Compose integriert.
+
+cAdvisor stellt eine Weboberfläche zur Verfügung, in der folgende Metriken überwacht werden können:
+
+- CPU-Auslastung
+- Arbeitsspeicherverbrauch
+- Netzwerk-Traffic
+- Dateisystem-Nutzung
+- Container-Laufzeit
+
+1. Erweiterung der docker-compose.yml:
+   
+      ```bash
+        cadvisor:
+          image: gcr.io/cadvisor/cadvisor:latest
+          container_name: cadvisor
+          ports:
+            - "8081:8080"
+          volumes:
+            - /:/rootfs:ro
+            - /var/run:/var/run:ro
+            - /sys:/sys:ro
+            - /var/lib/docker/:/var/lib/docker:ro
+          restart: unless-stopped
+     ```
+
+2. Container neu starten nach der Anpassung:
+   
+      ```bash
+        docker compose up -d
+     ```
+
+3. Zugriff erfolgt über:
+
+      ```bash
+        http://localhost:8081
+     ```
+
 
 ## 
 02 - Aufgetretene Fehler & Lösungen

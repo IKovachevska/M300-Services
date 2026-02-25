@@ -21,14 +21,23 @@ Git Hub,Git Bash, Virtualbox, Vagrant & Apache
   * LB2 - [LB2 hands-on](#lb2-hands-on)
 
 * 25 - [Sicherheit](#25---sicherheit)
-
+  * Fragen - [Firewall und Reverse Proxy](#Fragen---firewall-und-reverse-proxy)
+  * 01 - [Firewall & Reverse Proxy](#01---firewall-&-reverse-proxy)
+  * 02 - [Benutzer- & Rechteverwaltung](#02---benutzer--&-rechteverwaltung)
+  * 03 - [SSH](#03---ssh)
+  * 04 - [Authentifizierung & Autorisierung](#04---authentifizierung-&-autorisierung)
+  
 * 30 - [Container](#30---container)
 
 * 35 - [Sicherheit](#35---sicherheit)
 
-* 40 - [Kubernetes (k8s)](#40---kubernetes-k8s)
+* 40 - [Kubernetes (K8s)](#40---kubernetes-k8s)
 
-* 80 - [Ergänzungen zu den Unterlagen](#80---erganzungen-zu-den-unterlagen)
+* 50 - [Projekte](#50---projekte)
+  * 01 - [Docker Projekt - Gitea Git Server](#01---docker-projekt---gitea-git-server)
+  * 02 - [Aufgetretene Fehler & Lösungen](#02---aufgetretene-fehler-&-lösungen)
+
+* 80 - [Ergänzungen zu den Unterlagen](#80---ergänzungen-zu-den-unterlagen)
 
 ---
 
@@ -1053,7 +1062,7 @@ Im Unternehmensumfeld werden diese Prozesse im Rahmen des Identity and Access Ma
 > [⇧ **Nach oben**](#inhaltsverzeichnis)
 
 
-40 - Kubernetes
+40 - Kubernetes (K8s)
 ===================
 
 > [⇧ **Nach oben**](#inhaltsverzeichnis)
@@ -1062,11 +1071,12 @@ Im Unternehmensumfeld werden diese Prozesse im Rahmen des Identity and Access Ma
 50 - Projekte
 ===================
 
-> [⇧ **Nach oben**](#inhaltsverzeichnis)
 
 ##
-Docker Projekt – Gitea Git Server
+01 - Docker Projekt – Gitea Git Server
 ===
+
+> [⇧ **Nach oben**](#inhaltsverzeichnis)
 
 ## Zweck des gewählten Service
 
@@ -1227,8 +1237,10 @@ Zur Überwachung wurden folgende Docker-Tools eingesetzt:
      ```
 
 ## 
-Aufgetretene Fehler & Lösungen
+02 - Aufgetretene Fehler & Lösungen
 ===
+
+> [⇧ **Nach oben**](#inhaltsverzeichnis)
 
 ## Fehler 1 – HTTP 405 Method Not Allowed
 
@@ -1285,7 +1297,7 @@ Initial kam beim SSH-Test:
 
     hinzufügen.
 
-Danach funktionierte:
+4. Danach funktionierte:
 
     ```bash
       ssh -p 2222 git@localhost

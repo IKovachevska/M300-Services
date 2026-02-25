@@ -1,4 +1,4 @@
-# M300-Plattformübergreifende-Dienste-in-ein-Netzwerk-integrieren
+## M300-Plattformübergreifende-Dienste-in-ein-Netzwerk-integrieren
 Toolumgebung für Modul 300
 
 Git Hub,Git Bash, Virtualbox, Vagrant & Apache
@@ -7,142 +7,111 @@ Git Hub,Git Bash, Virtualbox, Vagrant & Apache
 
 <!-- TOC -->
 
-- [M300-Plattformübergreifende-Dienste-in-ein-Netzwerk-integrieren](#m300-plattform%C3%BCbergreifende-dienste-in-ein-netzwerk-integrieren)
-            - [Inhaltsverzeichnis](#inhaltsverzeichnis)
-- [- Toolumgebung aufsetzen](#--toolumgebung-aufsetzen)
-- [- GitHub Account](#--github-account)
+- [10 - Toolumgebung aufsetzen](#10---toolumgebung-aufsetzen)
+  - [01 - GitHub Account](#01---github-account)
     - [Account erstellen](#account-erstellen)
     - [Repository erstellen](#repository-erstellen)
-    - [SSH-Key erstellen und dem SSH-Agent hinzufügen](#ssh-key-erstellen-und-dem-ssh-agent-hinzuf%C3%BCgen)
-    - [](#)
-- [- Git Client](#--git-client)
+    - [SSH-Key erstellen und dem SSH-Agent hinzufügen](#ssh-key-erstellen-und-dem-ssh-agent-hinzufügen)
+  - [02 - Git Client](#02---git-client)
     - [Repository klonen](#repository-klonen)
-    - [Repository herunterladen & aktualisieren clone/pull](#repository-herunterladen--aktualisieren-clonepull)
-    - [](#)
-- [- VirtualBox](#--virtualbox)
+    - [Repository herunterladen \& aktualisieren (clone/pull)](#repository-herunterladen--aktualisieren-clonepull)
+  - [03 - VirtualBox](#03---virtualbox)
     - [VM erstellen](#vm-erstellen)
     - [VM einrichten](#vm-einrichten)
-    - [](#)
-- [- Vagrant](#--vagrant)
+  - [04 - Vagrant](#04---vagrant)
     - [Virtuelle Maschine erstellen](#virtuelle-maschine-erstellen)
     - [Apache Webserver automatisiert aufsetzen](#apache-webserver-automatisiert-aufsetzen)
-    - [](#)
-- [- Visual Studio Code](#--visual-studio-code)
+  - [05 - Visual Studio Code](#05---visual-studio-code)
     - [Extensions installieren](#extensions-installieren)
     - [Einstellungen anpassen](#einstellungen-anpassen)
-    - [Repository hinzufügen & pushen](#repository-hinzuf%C3%BCgen--pushen)
-- [- Infrastruktur-Automatisierung](#--infrastruktur-automatisierung)
-    - [](#)
-- [- Cloud Computing](#--cloud-computing)
+    - [Repository hinzufügen \& pushen](#repository-hinzufügen--pushen)
+- [20 - Infrastruktur-Automatisierung](#20---infrastruktur-automatisierung)
+  - [01 - Cloud Computing](#01---cloud-computing)
     - [Arten von Cloud Computing](#arten-von-cloud-computing)
-    - [](#)
-- [- Infrastructure as Code IaC](#--infrastructure-as-code-iac)
-    - [](#)
-- [- Vagrant](#--vagrant)
-    - [Funktionsweise & Konzepte](#funktionsweise--konzepte)
+  - [02 - Infrastructure as Code (IaC)](#02---infrastructure-as-code-iac)
+  - [03 - Vagrant](#03---vagrant)
+    - [Funktionsweise \& Konzepte](#funktionsweise--konzepte)
     - [Boxen / Konfiguration / Provisioning / Provider](#boxen--konfiguration--provisioning--provider)
-        - [Ergänzung](#erg%C3%A4nzung)
+    - [Ergänzung](#ergänzung)
     - [Workflow](#workflow)
-        - [Box hinzufügen](#box-hinzuf%C3%BCgen)
-        - [VM erstellen](#vm-erstellen)
-        - [VM updaten](#vm-updaten)
-        - [VM löschen](#vm-l%C3%B6schen)
-    - [Synced Folders Gemeinsame Ordner](#synced-folders-gemeinsame-ordner)
-        - [Ergänzung](#erg%C3%A4nzung)
-    - [](#)
-- [- Packer](#--packer)
-    - [](#)
-- [- AWS Cloud](#--aws-cloud)
+    - [Box hinzufügen](#box-hinzufügen)
+    - [VM erstellen](#vm-erstellen-1)
+    - [VM updaten](#vm-updaten)
+    - [VM löschen](#vm-löschen)
+    - [Synced Folders (Gemeinsame Ordner)](#synced-folders-gemeinsame-ordner)
+    - [Ergänzung](#ergänzung-1)
+  - [04 - Packer](#04---packer)
+  - [05 - AWS Cloud](#05---aws-cloud)
     - [Vagrant](#vagrant)
-    - [](#)
-- [LB2 hands-on](#lb2-hands-on)
+  - [LB2 hands-on](#lb2-hands-on)
     - [Neue VM zum Testen erstellen](#neue-vm-zum-testen-erstellen)
-    - [Serverdienste auswählen](#serverdienste-ausw%C3%A4hlen)
+    - [Serverdienste auswählen](#serverdienste-auswählen)
     - [Feintuning](#feintuning)
-        - [Dateien und Port Weiterleitung](#dateien-und-port-weiterleitung)
+    - [Dateien und Port Weiterleitung](#dateien-und-port-weiterleitung)
     - [Sicherheit](#sicherheit)
-- [- Sicherheit](#--sicherheit)
-    - [](#)
-- [Fragen: Firewall und Reverse Proxy](#fragen-firewall-und-reverse-proxy)
-        - [SSH](#ssh)
-    - [](#)
-- [- Firewall & Reverse Proxy](#--firewall--reverse-proxy)
+- [25 - Sicherheit](#25---sicherheit)
+  - [01 - Firewall \& Reverse Proxy](#01---firewall--reverse-proxy)
     - [UFW Firewall](#ufw-firewall)
     - [Reverse Proxy](#reverse-proxy)
-    - [](#)
-- [- Benutzer- & Rechteverwaltung](#--benutzer---rechteverwaltung)
-    - [](#)
-- [– SSH](#-ssh)
+  - [02 - Benutzer- \& Rechteverwaltung](#02---benutzer---rechteverwaltung)
+  - [03 – SSH](#03--ssh)
     - [Public Key Verfahren](#public-key-verfahren)
-    - [SSH-Tunnel Local Port Forwarding](#ssh-tunnel-local-port-forwarding)
-        - [Erklärung:](#erkl%C3%A4rung)
-    - [](#)
-- [- Authentifizierung & Autorisierung](#--authentifizierung--autorisierung)
-- [- Container](#--container)
-    - [](#)
-- [Fragen - Container](#fragen---container)
-        - [Docker](#docker)
-        - [Docker Hub](#docker-hub)
-    - [](#)
-- [LB3 hands-on](#lb3-hands-on)
-    - [](#)
-- [- Container](#--container)
-        - [Wichtige Merkmale von Containern](#wichtige-merkmale-von-containern)
-        - [Container von Microservices](#container-von-microservices)
-    - [](#)
-- [- Docker](#--docker)
+    - [SSH-Tunnel (Local Port Forwarding)](#ssh-tunnel-local-port-forwarding)
+    - [Erklärung:](#erklärung)
+  - [04 - Authentifizierung \& Autorisierung](#04---authentifizierung--autorisierung)
+- [30 - Container](#30---container)
+  - [LB3 hands-on](#lb3-hands-on)
+  - [01 - Container](#01---container)
+    - [Wichtige Merkmale von Containern](#wichtige-merkmale-von-containern)
+    - [Container von Microservices](#container-von-microservices)
+  - [02 - Docker](#02---docker)
     - [Docker Architektur](#docker-architektur)
     - [Befehle](#befehle)
-        - [Docker Images](#docker-images)
-        - [MySQL Container](#mysql-container)
-    - [Fehler und Lösungen](#fehler-und-l%C3%B6sungen)
-        - [Fehler 1 – Git Bash /bin/bash Problem](#fehler-1--git-bash-binbash-problem)
-            - [Lösung:](#l%C3%B6sung)
-        - [Fehler 2 – MySQL Container beendet sich sofort](#fehler-2--mysql-container-beendet-sich-sofort)
-            - [Ursache:](#ursache)
-            - [Lösung:](#l%C3%B6sung)
-- [- Sicherheit](#--sicherheit)
-- [- Kubernetes K8s](#--kubernetes-k8s)
-    - [](#)
-- [- Grundbegriffe](#--grundbegriffe)
+    - [Docker Images](#docker-images)
+    - [MySQL Container](#mysql-container)
+  - [Fehler und Lösungen](#fehler-und-lösungen)
+    - [Fehler 1 – Git Bash /bin/bash Problem](#fehler-1--git-bash-binbash-problem)
+      - [Ursache](#ursache)
+      - [Lösung](#lösung)
+    - [Fehler 2 – MySQL Container beendet sich sofort](#fehler-2--mysql-container-beendet-sich-sofort)
+      - [Ursache](#ursache-1)
+      - [Lösung](#lösung-1)
+- [35 - Sicherheit](#35---sicherheit)
+- [40 - Kubernetes (K8s)](#40---kubernetes-k8s)
+  - [01 - Grundbegriffe](#01---grundbegriffe)
     - [Service Discovery](#service-discovery)
-    - [Vernetzung Container Networking](#vernetzung-container-networking)
-    - [Lastverteilung Load Balancing](#lastverteilung-load-balancing)
+    - [Vernetzung (Container Networking)](#vernetzung-container-networking)
+    - [Lastverteilung (Load Balancing)](#lastverteilung-load-balancing)
     - [Cluster](#cluster)
-    - [](#)
-- [– Kubernetes](#-kubernetes)
-        - [Wichtige Eigenschaften](#wichtige-eigenschaften)
-        - [Wichtige Kubernetes-Objekte](#wichtige-kubernetes-objekte)
-        - [Gesamtzusammenfassung](#gesamtzusammenfassung)
-    - [](#)
-- [- Kubernetes hands-on](#--kubernetes-hands-on)
-        - [Wichtige Konzepte:](#wichtige-konzepte)
-- [- Projekte](#--projekte)
-    - [](#)
-- [- Docker Projekt – Gitea Git Server](#--docker-projekt--gitea-git-server)
-    - [Zweck des gewählten Service](#zweck-des-gew%C3%A4hlten-service)
+  - [02 – Kubernetes](#02--kubernetes)
+    - [Wichtige Eigenschaften](#wichtige-eigenschaften)
+    - [Wichtige Kubernetes-Objekte](#wichtige-kubernetes-objekte)
+    - [Gesamtzusammenfassung](#gesamtzusammenfassung)
+  - [03 - Kubernetes hands-on](#03---kubernetes-hands-on)
+    - [Wichtige Konzepte:](#wichtige-konzepte)
+- [50 - Projekte](#50---projekte)
+  - [01 - Docker Projekt – Gitea Git Server](#01---docker-projekt--gitea-git-server)
+    - [Zweck des gewählten Service](#zweck-des-gewählten-service)
     - [Aufbau / Logische Struktur](#aufbau--logische-struktur)
-        - [Netzwerk](#netzwerk)
-        - [Persistenz Volumes](#persistenz-volumes)
-    - [Projektordner erstellen & Konfiguration des Dienstes](#projektordner-erstellen--konfiguration-des-dienstes)
-    - [Netzwerk & Ports](#netzwerk--ports)
-        - [Webzugriff:](#webzugriff)
-        - [SSH Zugriff:](#ssh-zugriff)
-    - [Host ↔ Container Interaktion Volumes](#host--container-interaktion-volumes)
-    - [Monitoring Lösung](#monitoring-l%C3%B6sung)
-        - [Externes Monitoring mit cAdvisor](#externes-monitoring-mit-cadvisor)
-    - [](#)
-- [- Aufgetretene Fehler & Lösungen](#--aufgetretene-fehler--l%C3%B6sungen)
+    - [Netzwerk](#netzwerk)
+    - [Persistenz (Volumes)](#persistenz-volumes)
+    - [Projektordner erstellen \& Konfiguration des Dienstes](#projektordner-erstellen--konfiguration-des-dienstes)
+    - [Netzwerk \& Ports](#netzwerk--ports)
+    - [Webzugriff](#webzugriff)
+    - [SSH Zugriff](#ssh-zugriff)
+    - [Host ↔ Container Interaktion (Volumes)](#host--container-interaktion-volumes)
+    - [Monitoring Lösung](#monitoring-lösung)
+    - [Externes Monitoring mit cAdvisor](#externes-monitoring-mit-cadvisor)
+  - [02 - Aufgetretene Fehler \& Lösungen](#02---aufgetretene-fehler--lösungen)
     - [Fehler 1 – HTTP 405 Method Not Allowed](#fehler-1--http-405-method-not-allowed)
-        - [Ursache:](#ursache)
-        - [Lösung:](#l%C3%B6sung)
+      - [Ursache](#ursache-2)
+      - [Lösung](#lösung-2)
     - [Fehler 2 – SSH Verbindung funktionierte nicht](#fehler-2--ssh-verbindung-funktionierte-nicht)
-        - [Ursache:](#ursache)
-        - [Lösung:](#l%C3%B6sung)
+      - [Ursache](#ursache-3)
+      - [Lösung](#lösung-3)
     - [Fehler 3 – Unsicherheit bei Datenbank Konfiguration](#fehler-3--unsicherheit-bei-datenbank-konfiguration)
-        - [Lösung:](#l%C3%B6sung)
-    - [](#)
-- [Funktionstest](#funktionstest)
+      - [Lösung](#lösung-4)
+  - [Funktionstest](#funktionstest)
 
 <!-- /TOC -->
 
@@ -153,12 +122,11 @@ Git Hub,Git Bash, Virtualbox, Vagrant & Apache
 Hier wird die Installation von GitHub, VirtualBox, Vagrant und Visual Studio Code durchgeführt.
 
 
-01 - GitHub Account
-===
+## 01 - GitHub Account
 
 > [⇧ **Nach oben**](#inhaltsverzeichnis)
 
-## Account erstellen
+### Account erstellen
 
 Zunächst wurde ein GitHub-Account auf https://www.github.com erstellt.
 
@@ -170,7 +138,7 @@ Folgende Angaben wurden gemacht:
 
 Nach der Registrierung wurde die E-Mail zur Verifizierung des Kontos bestätigt und anschliessend auf GitHub angemeldet.
 
-## Repository erstellen
+### Repository erstellen
 
 Nach der Anmeldung wurde ein neues Repository <strong>M300 -Services</strong> erstellt.
 
@@ -184,7 +152,7 @@ Vorgehen:
 
 Das Repository wurde erfolgreich erstellt.
 
-## SSH-Key erstellen und dem SSH-Agent hinzufügen
+### SSH-Key erstellen und dem SSH-Agent hinzufügen
 
 Vorgehen
 
@@ -214,9 +182,7 @@ Vorgehen
 6.  Der SSH-Key wurde erfolgreich hinzugefügt.
 
 
-##
-02 - Git Client
-===
+## 02 - Git Client
 
 > [⇧ **Nach oben**](#inhaltsverzeichnis)
 
@@ -231,7 +197,7 @@ Vorgehen
       $ git config --global user.email "<kovacevskai11@gmail.com>"
     ```
 
-## Repository klonen
+### Repository klonen
 
 1. Repository mit SSH klonen:
 
@@ -246,8 +212,7 @@ Vorgehen
 
 ![Abbildung 2](images/Abbildung-2.png)
 
-
-## Repository herunterladen & aktualisieren (clone/pull)
+### Repository herunterladen & aktualisieren (clone/pull)
 
 1. Ordner für Repository im gewünschten Verzeichnis erstellen, Repository mit SSH klonen und aktualisieren:
 
@@ -258,15 +223,14 @@ Vorgehen
       $ git pull
     ```
 
-## 
-03 - VirtualBox
-===
+
+## 03 - VirtualBox
 
 > [⇧ **Nach oben**](#inhaltsverzeichnis)
 
 VirtualBox wurde von der offiziellen Webseite heruntergeladen und installiert.
 
-## VM erstellen
+### VM erstellen
 
 Neue VM erstellt mit folgenden Einstellungen:
 
@@ -279,7 +243,7 @@ Neue VM erstellt mit folgenden Einstellungen:
 - Typ: VMDK
 - Dynamisch alloziert
 
-## VM einrichten
+### VM einrichten
 
 1. Ubuntu-VM starten
    
@@ -321,15 +285,14 @@ Apache-Standardseite wurde angezeigt.
 
 ![Abbildung 7](images/Abbildung-7.png)
 
-## 
-04 - Vagrant
-===
+
+## 04 - Vagrant
 
 > [⇧ **Nach oben**](#inhaltsverzeichnis)
 
 Die Software installiert und befähigt.
 
-## Virtuelle Maschine erstellen
+### Virtuelle Maschine erstellen
 
 1. In dem gewünschten Verzeichnis einen neuen Ordner für die VM angelegt:
 
@@ -359,7 +322,7 @@ Die Software installiert und befähigt.
 	   $ free -m   
      ```   
 
-## Apache Webserver automatisiert aufsetzen
+### Apache Webserver automatisiert aufsetzen
 
 1. In das M300-Verzeichnis wechseln:
 
@@ -386,15 +349,13 @@ Die Software installiert und befähigt.
      ```   
 
 
-##
-05 - Visual Studio Code
-===
+## 05 - Visual Studio Code
 
 > [⇧ **Nach oben**](#inhaltsverzeichnis)
 
 Die Software war bereits installiert und einsatzfähig.
 
-## Extensions installieren
+### Extensions installieren
 
 Benötigte Extensions installiert:
 
@@ -403,7 +364,7 @@ Benötigte Extensions installiert:
 - vscode-pdf Extension (von tomiko1207)
 - Auto Markdown TOC (huntertran.auto-markdown-toc)
 
-## Einstellungen anpassen
+### Einstellungen anpassen
 
 1. Unter File > Preferences > Settings (Ctrl + ,) auf <strong>Open setting.json</strong> klicken.
 
@@ -424,7 +385,7 @@ Benötigte Extensions installiert:
    
     ![Abbildung 9](images/Abbildung-9.png)
 
-## Repository hinzufügen & pushen
+### Repository hinzufügen & pushen
 
 - Änderungen an entsprechenden Dateien vorgenommen
 - In der linken Leiste das Symbol mit einer "1" aufgerufen
@@ -440,15 +401,13 @@ Benötigte Extensions installiert:
 Hier wird das Einrichten einer Dynamischen Infrastruktur-Plattform (Private Cloud) auf Basis von konsistenten und wiederholbaren Definitionen gezeigt.
 
 
-##
-01 - Cloud Computing
-===
+## 01 - Cloud Computing
 
 > [⇧ **Nach oben**](#inhaltsverzeichnis)
 
 Cloud Computing bedeutet, dass IT-Ressourcen wie Server, Speicher, Netzwerke oder Software nicht lokal, sondern über das Internet bereitgestellt und genutzt werden. Der Zugriff erfolgt über technische Schnittstellen (APIs) oder Browser.
 
-## Arten von Cloud Computing
+### Arten von Cloud Computing
 
 IaaS (Infrastructure as a Service):
 
@@ -477,9 +436,8 @@ CaaS (Container as a Service):
 
 ---
 
-##
-02 - Infrastructure as Code (IaC)
-===
+
+## 02 - Infrastructure as Code (IaC)
 
 > [⇧ **Nach oben**](#inhaltsverzeichnis)
 
@@ -510,15 +468,14 @@ CaaS (Container as a Service):
 - <strong>Scripting:</strong> Bash, PowerShell
 - <strong>Repositories:</strong> GitHub, Docker Hub, Vagrant Cloud
   
-##
-03 - Vagrant
-===
+
+## 03 - Vagrant
 
 > [⇧ **Nach oben**](#inhaltsverzeichnis)
 
 Vagrant ist ein CLI-Tool zur einfachen Erstellung und Verwaltung von virtuellen Maschinen.
 
-## Funktionsweise & Konzepte
+### Funktionsweise & Konzepte
 
 CLI - Befehle:
 
@@ -532,7 +489,7 @@ CLI - Befehle:
 | `vagrant halt`            | Stoppt die laufende Virtuelle Maschine                            |
 | `vagrant destroy`         | Stoppt die Virtuelle Maschine und zerstört sie.                   |
 
-## Boxen / Konfiguration / Provisioning / Provider
+### Boxen / Konfiguration / Provisioning / Provider
 
 1. Einen neuen Ordner in das MeineVagrantVM - Verzeichnis erstellt:
    
@@ -606,7 +563,7 @@ Dies ermöglicht eine automatisierte Serverbereitstellung.
 Als Provider wird VirtualBox verwendet.
 Die VM wurde mit 512 MB RAM konfiguriert.
 
-## Workflow
+### Workflow
 
 ### Box hinzufügen
 
@@ -655,7 +612,7 @@ Die VM wurde mit 512 MB RAM konfiguriert.
         $ vagrant destroy -f
      ``` 
 
-## Synced Folders (Gemeinsame Ordner)
+### Synced Folders (Gemeinsame Ordner)
 
 Synchronisierte Ordner ermöglichen es der VM auf Verzeichnisse des Host-Systems zuzugreifen.
 
@@ -716,9 +673,8 @@ wird in der VM unter /var/www/html eingebunden.
 
 ![Abbildung 23](images/Abbildung-23.png)
 
-##
-04 - Packer
-===
+
+## 04 - Packer
 
 > [⇧ **Nach oben**](#inhaltsverzeichnis)
 
@@ -728,9 +684,8 @@ Packer erstellt automatisiert VM-Images oder Vagrant-Boxen aus Konfigurationsdat
 - <strong>Provisioner:</strong> Installation & Konfiguration
 - <strong>Post-Processor:</strong> Erzeugt z. B. Vagrant-Boxen
 
-##
-05 - AWS Cloud
-===
+
+## 05 - AWS Cloud
 
 > [⇧ **Nach oben**](#inhaltsverzeichnis)
 
@@ -749,18 +704,17 @@ Security Groups legen fest welche Ports nach aussen offen sind und können für 
 Key Pairs sind Private & Public Keys. Wobei der Public Key bei Amazon verbleibt und der Private Key vom User lokal abgelegt wird um damit auf die VMs in der Cloud zugreifen zu können. |
 | `AWS Images`            | Es gibt vorbereitete VM-Images von AWS, welche einfach über die EC2-Konsole instanziert werden können. |
 
-## Vagrant
+### Vagrant
 
 - Vagrant kann EC2-Instanzen automatisiert starten
 - Apache kann per Provisioning direkt installiert werden
   
-##
-LB2 hands-on
-===
+
+## LB2 hands-on
 
 > [⇧ **Nach oben**](#inhaltsverzeichnis)
 
-## Neue VM zum Testen erstellen
+### Neue VM zum Testen erstellen
 
 1. Zuerst erzeugen wir ein neues Verzeichnis mit einer Vagrantfile mit einem Ubuntu:
 
@@ -772,7 +726,7 @@ LB2 hands-on
         $ vagrant up
      ```  
 
-## Serverdienste auswählen
+### Serverdienste auswählen
 
 Anschliessend suchen wir uns die Serverdienste aus, welche wir automatisieren wollen.
 
@@ -810,7 +764,7 @@ Anschliessend suchen wir uns die Serverdienste aus, welche wir automatisieren wo
 
    ![Abbildung 27](images/Abbildung-27.png)
 
-## Feintuning
+### Feintuning
 
 ### Dateien und Port Weiterleitung
 
@@ -848,7 +802,7 @@ Anschliessend suchen wir uns die Serverdienste aus, welche wir automatisieren wo
 
    ![Abbildung 30](images/Abbildung-30.png)
 
-## Sicherheit
+### Sicherheit
 
 1. Die VW wurde zusätzlich mit einer Firewall abgesichert.
 
@@ -872,65 +826,14 @@ Die virtuelle Maschine wurde zusätzlich mit der Firewall UFW abgesichert. Dabei
 
 Hier werden verschiedene Möglichkeiten aufgezeigt, wie eine virtualisierte Infrastruktur in Punkto Sicherheit verbessert werden kann.
 
-##
-Fragen: Firewall und Reverse Proxy
-===
 
-> [⇧ **Nach oben**](#inhaltsverzeichnis)
-
-<strong>Was ist der Unterschied zwischen eineam Web Server und einem Reverse Proxy?</strong>
-
-- Web Server handelt HTML Seiten direkt ab, Reverse Proxy dient als Stellvertretter für einen Web Server o.ä.
-  
---- 
-
-<strong>Was verstehen wir unter einer „White List“?</strong>
-
-- Eine White List, fasst im Gegensatz zu einer Black List, Vertrauenswürdige Elemente, z.B. Server zusammen.
-
----
-
-<strong>Was wäre die Alternative zum Absichern der einzelnen Server mit einer Firewall?</strong>
-
-- Eine Zentrale Firewall
-
----
-
-### SSH
-
-<strong>Was ist der Unterschied zwischen der Datei id_rsa und id_rsa.pub?</strong>
-
-- Private und Public Key
-
----
-
-<strong>Wo darf ein SSH-Tunnel nicht angewendet werden?</strong>
-
-- In der Firma
-
----
-
-<strong>Für was dient die Datei authorized_keys?</strong>
-
-- Beinhaltet die Public Key von allen wo ohne Password auf System dürfen
-
----
-
-<strong>Für was dient die Datei known_hosts?</strong>
-
-- Liste der Systeme wo ich mich via ssh Verbunden habe - steht nicht in Doku -> Googeln
-
----
-
-##
-01 - Firewall & Reverse Proxy
-===
+## 01 - Firewall & Reverse Proxy
 
 > [⇧ **Nach oben**](#inhaltsverzeichnis)
 
 Aktuell sind alle Services ungehindert zugreifbar. Würde man eine VM direkt ins Internet oder in eine DMZ stellen, entstuende dadurch ein erhebliches Sicherheitsrisiko. Um dies zu verhindern, werden nicht-öffentliche Ports mithilfe einer Firewall gesperrt und der zulässige Datenverkehr zusätzlich über einen Reverse Proxy geschützt und verschlüsselt. So wird der Zugriff kontrolliert, unerwuenschter Traffic blockiert und die eigentlichen Zielsysteme bleiben vor direkter Erreichbarkeit geschützt.
    
-## UFW Firewall
+### UFW Firewall
 
 UFW steht für Uncomplicated Firewall. Ziel von UFW ist es, ein unkompliziertes Kommandozeilen-basiertes Frontend für das sehr leistungsfähige, aber nicht gerade einfach zu konfigurierende iptables zu bieten.
 
@@ -988,7 +891,7 @@ UFW steht für Uncomplicated Firewall. Ziel von UFW ist es, ein unkompliziertes 
 
    ![Abbildung 35](images/Abbildung-35.png)
 
-## Reverse Proxy
+### Reverse Proxy
 
 1. Module in Apache aktivieren
 
@@ -1021,9 +924,8 @@ UFW steht für Uncomplicated Firewall. Ziel von UFW ist es, ein unkompliziertes 
 
    ![Abbildung 36](images/Abbildung-36.png)
 
-##
-02 - Benutzer- & Rechteverwaltung
-===
+
+## 02 - Benutzer- & Rechteverwaltung
 
 > [⇧ **Nach oben**](#inhaltsverzeichnis)
 
@@ -1052,15 +954,13 @@ Die Verwaltung der Rechte erfolgt mit den Befehlen:
 Dieses Berechtigungssystem stellt sicher, dass Benutzer nur auf die Ressourcen zugreifen können, für die sie autorisiert sind, und bildet eine zentrale Grundlage für die Systemsicherheit unter Linux.
 
 
-##
-03 – SSH
-===
+## 03 – SSH
 
 > [⇧ **Nach oben**](#inhaltsverzeichnis)
 
 Im Rahmen der Aufgabe wurde für die VM ein neuer Benutzer eingerichtet und die SSH-Authentifizierung mittels Public-Key-Verfahren konfiguriert.
 
-## Public Key Verfahren
+### Public Key Verfahren
 
 1. Der Benutzer admin01 wurde erstellt und der sudo-Gruppe hinzugefügt, damit administrative Befehle ausgeführt werden können.
 
@@ -1111,7 +1011,7 @@ Damit wurde bestätigt, dass die Authentifizierung mittels Public-Key korrekt fu
         ls -l ~/.ssh/authorized_keys
      ```
 
-## SSH-Tunnel (Local Port Forwarding)
+### SSH-Tunnel (Local Port Forwarding)
 
 1. Es wurde ein lokaler SSH-Tunnel innerhalb der VM erstellt.
 
@@ -1136,9 +1036,8 @@ Damit wurde bestätigt, dass die Authentifizierung mittels Public-Key korrekt fu
 
 Damit wurde bestätigt, dass Port 9000 lokal weitergeleitet wird.
 
-##
-04 - Authentifizierung & Autorisierung
-===
+
+## 04 - Authentifizierung & Autorisierung
 
 > [⇧ **Nach oben**](#inhaltsverzeichnis)
 
@@ -1159,145 +1058,14 @@ Im Unternehmensumfeld werden diese Prozesse im Rahmen des Identity and Access Ma
 30 - Container
 ===================
 
-##
-Fragen - Container
-===
 
-> [⇧ **Nach oben**](#inhaltsverzeichnis)
-
-<strong>Was ist der Unterschied zwischen Vagrant und Docker?</strong>
-
-- Vagrant ist für IaaS (Virtuelle Maschinen) und Docker für PaaS bzw. CaaS (Container)
-
---- 
-
-<strong>Was welches Tools aus dem Docker Universum ist Vergleichbar mit Vagrant?</strong>
-
-- docker machine
-
----
-
-<strong>Was macht der Docker Provisioner von Vagrant?</strong>
-
-- Installiert Docker in einer VM
-
----
-
-<strong>Welche Linux Kernel Funktionalität verwenden Container?</strong>
-
-- Linux Namespaces, siehe auch [The Missing Introduction To Containerization]
-
----
-
-<strong>Welches Architekturmuster verwendet der Entwickler wenn er Container einsetzt?</strong>
-
-- Microservices
-
----
-
-<strong>Welches sind die drei Hauptmerkmale (abgeleitet vom Ur-Unix) von Microservices?</strong>
-
-- Ein Programm soll nur eine Aufgabe erledigen, und das soll es gut machen. Programme sollen zusammenarbeiten können. Nutze eine universelle Schnittstelle. In UNIX sind das Textströme. Bei Microservices das Internet (REST).
-
----
-
-### Docker
-
-<strong>Was ist der Unterschied zwischen einem Docker Image und einem Container?</strong>
-
-- Image = gebuildet und readonly, Container Image + aktuelle Änderungen im Filesystem
-
----
-
-<strong>Was ist der Unterschied zwischen einer Virtuellen Maschine und einem Docker Container?</strong>
-
-- VM hat Betriebssystem mit am laufen, Docker nur die eigenen Prozesse
-
----
-
-<strong>Was ist der Unterschied zwischen einem Docker Image und einem Container?</strong>
-
-- Image = gebuildet und readonly, Container Image + aktuelle Änderungen im Filesystem
-
----
-
-<strong>Wie bekomme ich Informationen zu einem laufenden Docker Container?</strong>
-
-- docker logs, docker inspect
-
----
-
-<strong>Was ist der Unterschied zwischen einer Docker Registry und einem Repository</strong>
-
-- In der Docker Registry werden die Container Images gespeichert. Ein Repository speichert pro Container Image verschiedene Versionen von Images.
-
----
-
-<strong>Wie erstelle ich ein Container Image</strong>
-
-- docker build
-
----
-
-<strong>In welcher Datei steht welche Inhalte sich im Container Image befinden?</strong>
-
-- Dockerfile
-
----
-
-<strong>Der erste Prozess im Container bekommt die Nummer?</strong>
-
-- 1
-
----
-
-### Docker Hub
-
-<strong>Was ist Docker Hub?</strong>
-
-- Ein Container Registry, wo Container Image gespeichert werden. Docker Hub wird durch die Firma Docker zur Verfügung gestellt wird.
-
----
-
-<strong>Welches sind die Alternativen?</strong>
-
-- Praktisch jeder Cloud Anbieter stellt eine Container Registry zur Verfügung. Auch die Anbieter für die Verwaltung von Build Artefakten (z.B. Sonatype Nexus) stellen Docker Registries zur Verfügung oder haben deren Funktionalität integriert.
-
----
-
-<strong>Warum sollte eine eigene Docker Registry im Unternehmen verwendet werden?</strong>
-
-- Sicherheit, bzw. das mögliche Fehlen davon. Es kann nicht Sichergestellt werden, dass alle Container Images auf Docker Hub sicher sind.
-
----
-
-<strong>Warum sollten Versionen tag von Images immer angegeben werden?
-
-</strong>
-
-- Ansonsten wird `latest` verwendet und so nicht sicher welche Version wirklich verwendet wird.
-
----
-
-<strong>Was ist der Unterschied zwischen `docker save`/`docker load` und `docker export`/`docker import`?
-
-</strong>
-
-- `save/load` ist für Images, `export/import` für Container. So ist es möglich auch ohne Docker Registry Container Images auszutauschen, z.B. in einer Bank.
-
----
-
-##
-LB3 hands-on
-===
+## LB3 hands-on
 
 > [⇧ **Nach oben**](#inhaltsverzeichnis)
 
 ---------------------------------------- MUSS ERGÄNZT WERDEN!
 
-## 
-01 - Container
-===
+## 01 - Container
 
 > [⇧ **Nach oben**](#inhaltsverzeichnis)
 
@@ -1330,9 +1098,8 @@ Während klassische Software oft als Monolith aufgebaut ist (eine grosse, zusamm
 
 Container eignen sich ideal für Microservices, da jeder Service isoliert in einem eigenen Container betrieben werden kann.
 
-## 
-02 - Docker
-===
+ 
+## 02 - Docker
 
 > [⇧ **Nach oben**](#inhaltsverzeichnis)
 
@@ -1350,7 +1117,7 @@ Ein Image ist eine Vorlage, ein Container ist die laufende Instanz dieses Images
 
 Docker nutzt sogenannte Layer (Imageschichten). Jede Anweisung im Dockerfile erzeugt eine neue Schicht.
 
-## Docker Architektur
+### Docker Architektur
 
 Docker funktioniert nach dem Client-Server-Prinzip:
 
@@ -1358,7 +1125,7 @@ Docker funktioniert nach dem Client-Server-Prinzip:
 
 Images werden lokal gespeichert oder vom Docker Hub heruntergeladen.
 
-## Befehle
+### Befehle
 
 1. Docker Funktion getestet:
 
@@ -1465,11 +1232,12 @@ Eigenes Image mit Dockerfile gebaut
 Fehlermeldung:
 
 `exec`: "C:/Program Files/Git/usr/bin/bash": no such file or directory
-Ursache:
+
+#### Ursache
 
 --> Git Bash hat den Pfad /bin/bash falsch interpretiert.
 
-#### Lösung:
+#### Lösung
 
 1. Container ohne festen Pfad starten:
 
@@ -1485,14 +1253,14 @@ Container zeigte:
 
 `exited 0`
 
-#### Ursache:
+#### Ursache
 
 MySQL benötigt zwingend MYSQL_ROOT_PASSWORD.
 Ohne diese Variable beendet sich der Container.
 
 Zusätzlich wurde `--rm` verwendet → Container wurde automatisch gelöscht.
 
-#### Lösung:
+#### Lösung
 
 1. Container korrekt mit Umgebungsvariable starten:
 
@@ -1517,13 +1285,11 @@ Zusätzlich wurde `--rm` verwendet → Container wurde automatisch gelöscht.
 
 > [⇧ **Nach oben**](#inhaltsverzeichnis)
 
-##
-01 - Grundbegriffe
-===
+## 01 - Grundbegriffe
 
 > [⇧ **Nach oben**](#inhaltsverzeichnis)
 
-## Service Discovery
+### Service Discovery
 
 Service Discovery beschreibt den Prozess, bei dem ein Client die Verbindungsdaten (IP-Adresse und Port) einer passenden Service-Instanz erhält.
 
@@ -1539,7 +1305,7 @@ Typische Funktionen:
 - Verschlüsselung
 - Isolation von Container-Gruppen
 
-## Vernetzung (Container Networking)
+### Vernetzung (Container Networking)
 
 Container-Vernetzung bedeutet, Container miteinander zu verbinden, sodass sie miteinander kommunizieren können.
 
@@ -1548,7 +1314,7 @@ Es geht dabei nicht um physische Kabel, sondern um virtuelle Netzwerke.
 Service Discovery sorgt dafür, dass ein Dienst gefunden wird.
 Das Netzwerk sorgt dafür, dass die Verbindung hergestellt wird.
 
-## Lastverteilung (Load Balancing)
+### Lastverteilung (Load Balancing)
 
 Load Balancing verteilt Anfragen auf mehrere Systeme oder Container.
 
@@ -1560,7 +1326,7 @@ Ziel:
 
 Bei Webservern werden HTTP-Anfragen auf mehrere Container verteilt.
 
-## Cluster
+### Cluster
 
 Ein Cluster ist eine Gruppe vernetzter Computer (Nodes).
 
@@ -1571,9 +1337,7 @@ Zwei Hauptziele:
 
 In Container-Umgebungen bedeutet Cluster meist mehrere Server, auf denen Container laufen.
 
-##
-02 – Kubernetes
-===
+## 02 – Kubernetes
 
 > [⇧ **Nach oben**](#inhaltsverzeichnis)
 
@@ -1618,9 +1382,7 @@ Load Balancing verteilt die Last.
 Cluster erhöhen Leistung oder Verfügbarkeit.
 Kubernetes orchestriert Container in einem Cluster und automatisiert Betrieb, Skalierung und Updates.
 
-##
-03 - Kubernetes hands-on
-===
+## 03 - Kubernetes hands-on
 
 Kubernetes (K8s) ist ein Orchestrierungssystem für Container.
 Container werden nicht manuell gestartet, sondern über YAML-Dateien deklarativ beschrieben.
@@ -1635,22 +1397,21 @@ Container werden nicht manuell gestartet, sondern über YAML-Dateien deklarativ 
 Kubernetes erzeugt intern für jede Ressource eine YAML-Struktur.
 Diese YAML-Dateien können gespeichert und wiederverwendet werden.
 
+
 50 - Projekte
 ===================
 
 Ziel dieses Projektes war es, eine funktionierende Git-Plattform mit Docker bereitzustellen.
 
-##
-01 - Docker Projekt – Gitea Git Server
-===
+## 01 - Docker Projekt – Gitea Git Server
 
 > [⇧ **Nach oben**](#inhaltsverzeichnis)
 
-## Zweck des gewählten Service
+### Zweck des gewählten Service
 
 Gitea ist ein leichtgewichtiger, selbst gehosteter Git-Server. Er ermöglicht die zentrale Verwaltung von Repositories, Benutzern und Versionen, ähnlich wie GitHub oder GitLab, jedoch lokbegriffal im eigenen Netzwerk.
 
-## Aufbau / Logische Struktur
+### Aufbau / Logische Struktur
 
 Das Projekt wurde mit Docker Compose umgesetzt und besteht aus zwei Containern:
 
@@ -1672,7 +1433,7 @@ Docker Compose erstellt automatisch ein internes Netzwerk.
 
 Damit bleiben alle Daten auch nach einem Neustart erhalten.
 
-## Projektordner erstellen & Konfiguration des Dienstes
+### Projektordner erstellen & Konfiguration des Dienstes
 
 1. Projektordner lokal anlegen 
 
@@ -1736,7 +1497,7 @@ Damit bleiben alle Daten auch nach einem Neustart erhalten.
 ![Abbildung 38](images/Abbildung-38.png)
 
 
-## Netzwerk & Ports
+### Netzwerk & Ports
 
 Folgende Ports werden benötigt:
 
@@ -1745,17 +1506,17 @@ Folgende Ports werden benötigt:
 | `3000`            | Weboberfläche |
 | `2222`              |  SSH Git Zugriff |
 
-### Webzugriff:
+### Webzugriff
 
 http://localhost:3000
 
-### SSH Zugriff:
+### SSH Zugriff
 
       ```bash
         ssh -p 2222 git@localhost
      ```
 
-## Host ↔ Container Interaktion (Volumes)
+### Host ↔ Container Interaktion (Volumes)
 
 1. Volumes wurden verwendet, um Persistenz sicherzustellen:
 
@@ -1774,7 +1535,7 @@ http://localhost:3000
     waren alle Repositories weiterhin vorhanden.
     Damit wurde die korrekte Volume-Konfiguration bestätigt.
 
-## Monitoring Lösung
+### Monitoring Lösung
 
 Zur Überwachung wurden folgende Docker-Tools eingesetzt:
 
@@ -1843,13 +1604,11 @@ cAdvisor stellt eine Weboberfläche zur Verfügung, in der folgende Metriken üb
      ```
 
 
-## 
-02 - Aufgetretene Fehler & Lösungen
-===
+## 02 - Aufgetretene Fehler & Lösungen
 
 > [⇧ **Nach oben**](#inhaltsverzeichnis)
 
-## Fehler 1 – HTTP 405 Method Not Allowed
+### Fehler 1 – HTTP 405 Method Not Allowed
 
 1. Beim Test mit:
 
@@ -1861,11 +1620,11 @@ cAdvisor stellt eine Weboberfläche zur Verfügung, in der folgende Metriken üb
     
     HTTP/1.1 405 Method Not Allowed
     
-### Ursache:
+#### Ursache
 
     `-I` sendet eine HEAD-Anfrage. Gitea erlaubt nur GET und POST.
 
-### Lösung:
+#### Lösung
 
 1. Test mit normalem GET:
 
@@ -1874,17 +1633,17 @@ cAdvisor stellt eine Weboberfläche zur Verfügung, in der folgende Metriken üb
      ```
     Danach funktionierte der Zugriff korrekt.
 
-## Fehler 2 – SSH Verbindung funktionierte nicht
+### Fehler 2 – SSH Verbindung funktionierte nicht
 
 Initial kam beim SSH-Test:
 
 - Permission denied (publickey)
 
-### Ursache:
+#### Ursache
 
 - Kein SSH-Key hinterlegt.
 
-### Lösung:
+#### Lösung
 
 1. SSH-Key erstellen:
 
@@ -1910,11 +1669,11 @@ Initial kam beim SSH-Test:
       ssh -p 2222 git@localhost
      ```
 
-## Fehler 3 – Unsicherheit bei Datenbank Konfiguration
+### Fehler 3 – Unsicherheit bei Datenbank Konfiguration
 
 Im Setup-Screen war unklar, ob Werte geändert werden müssen.
 
-### Lösung:
+#### Lösung
 
 Die Docker Compose ENV Variablen wurden übernommen:
 
@@ -1927,9 +1686,8 @@ Die Docker Compose ENV Variablen wurden übernommen:
 
 Installation lief danach fehlerfrei.
 
-##
-Funktionstest
-===
+
+## Funktionstest
 
 1. Repository wurde erstellt:
 

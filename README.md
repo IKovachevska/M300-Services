@@ -1252,8 +1252,150 @@ Docker funktioniert nach dem Client-Server-Prinzip:
 
 Images werden lokal gespeichert oder vom Docker Hub heruntergeladen.
 
-
 ## Befehle
+
+1. Docker Funktion getestet:
+
+      ```bash
+        docker run hello-world
+     ```
+
+2. Ubuntu Container interaktiv gestartet
+   
+      ```bash
+        docker run -it ubuntu
+     ```
+
+
+3. Im Container getestet:
+
+      ```bash
+        whoami
+        ls
+        exit
+     ```
+
+4. Container im Hintergrund gestartet
+
+      ```bash
+        docker run -d ubuntu sleep 60
+     ```
+
+5. Container anzeigen:
+
+      ```bash
+        docker ps
+        docker ps -a
+     ```
+
+6. Container analysiert (vom Host aus)
+
+      ```bash
+        docker logs charming_zhukovsky
+        docker inspect charming_zhukovsky
+        docker diff charming_zhukovsky
+     ```
+
+### Docker Images
+
+Eigenes Image mit Dockerfile gebaut
+
+1. Dockerfile erstellt:
+
+      ```bash
+        FROM ubuntu:latest
+        RUN apt update && apt install -y curl
+        CMD ["bash"]
+     ```
+
+2. Image gebaut:
+
+      ```bash
+        docker build -t myubuntu .
+     ```
+
+3. Container gestartet:
+
+      ```bash
+        docker run -it myubuntu
+     ```
+
+3. Im Container getestet:
+
+      ```bash
+        curl --version
+     ```
+
+### MySQL Container
+
+1. Erster Versuch:
+
+      ```bash
+        docker run --rm -d --name mysql mysql
+     ```
+
+
+2. Später korrekt gestartet mit:
+
+      ```bash
+        docker run -d \
+        --name mysql \
+        -e MYSQL_ROOT_PASSWORD=secret \
+        -p 3306:3306 \
+       mysql:8.4docker run --rm -d --name mysql mysql
+     ```
+
+3. Status geprüft:
+
+      ```bash
+        docker ps
+        docker logs mysql
+     ```
+
+## Fehler und Lösungen
+
+### Fehler 1 – Git Bash /bin/bash Problem
+
+Fehlermeldung:
+
+`exec`: "C:/Program Files/Git/usr/bin/bash": no such file or directory
+Ursache:
+
+--> Git Bash hat den Pfad /bin/bash falsch interpretiert.
+
+#### Lösung:
+
+1. Container ohne festen Pfad starten:
+
+      ```bash
+        docker run -it ubuntu
+        oder
+        docker run -it ubuntu bash
+     ```
+
+### Fehler 2 – MySQL Container beendet sich sofort
+
+Container zeigte:
+
+`exited 0`
+
+#### Ursache:
+
+MySQL benötigt zwingend MYSQL_ROOT_PASSWORD.
+Ohne diese Variable beendet sich der Container.
+
+Zusätzlich wurde `--rm` verwendet → Container wurde automatisch gelöscht.
+
+#### Lösung:
+
+1. Container korrekt mit Umgebungsvariable starten:
+
+      ```bash
+        docker run -d \
+        --name mysql \
+        -e MYSQL_ROOT_PASSWORD=secret \
+        mysql:8.4
+     ```
 
 
 -------------
@@ -1269,6 +1411,107 @@ Images werden lokal gespeichert oder vom Docker Hub heruntergeladen.
 
 > [⇧ **Nach oben**](#inhaltsverzeichnis)
 
+##
+01 - Grundbegriffe
+===
+
+> [⇧ **Nach oben**](#inhaltsverzeichnis)
+
+## Service Discovery
+
+Service Discovery beschreibt den Prozess, bei dem ein Client die Verbindungsdaten (IP-Adresse und Port) einer passenden Service-Instanz erhält.
+
+In einfachen Systemen gibt es nur eine Instanz eines Dienstes – in verteilten Systemen jedoch mehrere Instanzen, die dynamisch starten und stoppen.
+
+Statt feste IP-Adressen zu verwenden, wird ein Service über einen Namen angesprochen (z.B. db oder api). Im Hintergrund sorgt die Service-Discovery dafür, dass der Client zur richtigen Instanz weitergeleitet wird.
+
+Typische Funktionen:
+
+- Health Checks
+- Failover
+- Load Balancing
+- Verschlüsselung
+- Isolation von Container-Gruppen
+
+## Vernetzung (Container Networking)
+
+Container-Vernetzung bedeutet, Container miteinander zu verbinden, sodass sie miteinander kommunizieren können.
+
+Es geht dabei nicht um physische Kabel, sondern um virtuelle Netzwerke.
+
+Service Discovery sorgt dafür, dass ein Dienst gefunden wird.
+Das Netzwerk sorgt dafür, dass die Verbindung hergestellt wird.
+
+## Lastverteilung (Load Balancing)
+
+Load Balancing verteilt Anfragen auf mehrere Systeme oder Container.
+
+Ziel:
+
+- Höhere Leistung
+- Bessere Verfügbarkeit
+- Vermeidung von Überlastung
+
+Bei Webservern werden HTTP-Anfragen auf mehrere Container verteilt.
+
+## Cluster
+
+Ein Cluster ist eine Gruppe vernetzter Computer (Nodes).
+
+Zwei Hauptziele:
+
+- HPC-Cluster → Mehr Rechenleistung
+- HA-Cluster → Höhere Verfügbarkeit
+
+In Container-Umgebungen bedeutet Cluster meist mehrere Server, auf denen Container laufen.
+
+##
+02 – Kubernetes
+===
+
+> [⇧ **Nach oben**](#inhaltsverzeichnis)
+
+Was ist Kubernetes?
+
+Kubernetes (K8s) ist ein Open-Source-System zur Orchestrierung von Containern.
+
+Es automatisiert:
+
+- Deployment
+- Skalierung
+- Verwaltung
+- Updates
+- Selbstheilung
+
+Kubernetes wurde ursprünglich von Google entwickelt.
+
+### Wichtige Eigenschaften
+
+- Immutable Infrastruktur (Container werden ersetzt statt verändert)
+- Deklarative Konfiguration (gewünschter Zustand wird beschrieben)
+- Selbstheilung (Neustart bei Absturz)
+- Automatische Skalierung
+- Infrastruktur-Abstraktion
+
+### Wichtige Kubernetes-Objekte
+
+| Objekt                    | Beschreibung                                                      |
+| ------------------------- | ----------------------------------------------------------------- | 
+| `Pod`            | Kleinste Einheit in Kubernetes.
+Enthält einen oder mehrere Container mit gemeinsamer IP-Adresse. |
+| `ReplicaSet`              |  Bestimmt, wie viele Pods gleichzeitig laufen sollen. |
+| `Deployment`             | Ermöglicht deklarative Updates (z.B. Version 1.0 → 1.1). |
+| `Service`          | Stellt stabile IP-Adresse und Port bereit, auch wenn Pods ersetzt werden. |
+| `Ingress`            | Ermöglicht Zugriff über URLs (ähnlich Reverse Proxy). |
+
+
+Gesamtzusammenfassung
+
+Service Discovery sorgt dafür, dass Services gefunden werden.
+Vernetzung ermöglicht die Kommunikation.
+Load Balancing verteilt die Last.
+Cluster erhöhen Leistung oder Verfügbarkeit.
+Kubernetes orchestriert Container in einem Cluster und automatisiert Betrieb, Skalierung und Updates.
 
 50 - Projekte
 ===================
